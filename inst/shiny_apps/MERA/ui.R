@@ -109,7 +109,7 @@ shinyUI(
        
     ),
     
-    h4("Welcome to MERA, an open-source tool for analyzing risk, guiding fishery improvement projects, and evaluating management strategies for certification.",style = "color:black; padding-bottom:12px"),
+    h4("Welcome to MERA, an open-source tool for analyzing risk, guiding fishery improvement projects, and evaluating management strategies",style = "color:black; padding-bottom:12px"),
     fluidRow(
       column(12,style="height:1px; background-color:#347ab6;"),
       
@@ -502,49 +502,9 @@ shinyUI(
              fluidRow(
 
                column(width = 4, style="height:360px",
-                      tabsetPanel( id = "tabs1",selected=3,
+                      tabsetPanel( id = "tabs1",selected=1,
                         
-                                   tabPanel(h4("Data",style = "color:black"),
-                                            
-                                            conditionalPanel(width=4,condition="output.Dpanel==undefined|output.Dpanel==0",
-                                                             
-                                                             HTML("<br>"),
-                                                             h5("The Data panel provides the option to load fishery data and specify the quality of the data that are available.",style="color:grey"),
-                                                             h5("These questions are used to: ",style="color:grey"),
-                                                             h5(" - identify what management procedures are feasible given the types of data available.",style="color:grey"),
-                                                             h5(" - determine the relative success of the management approaches that rely on differing types of data.",style="color:grey"),
-                                                             h5(""),
-                                                             h5("More detailed help on the data questions can be found in the MERA manual
-                                         : ", a("Section 2.3.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html#23_data_questions", target="_blank"),style="color:grey")),
-                                            
-                                            conditionalPanel(width=4,condition="output.Dpanel==1",
-                                                             
-                                                             h5("1. Load fishery data (optional)",style="color:black"),
-                                                             column(12,style="padding-left:27px",
-                                                                    
-                                                                    HTML("<br>"),
-                                                                    fileInput("Load_Data","Load available data  (.csv .xlsx .rda)"),
-                                                                    conditionalPanel(width=4,condition="output.Data==1",
-                                                                                     h5("Data Report",style="font-weight:bold"),
-                                                                                     downloadButton("Build_Data"," ")
-                                                                    )
-                                                             )),
-                                            
-                                            conditionalPanel(width=4,condition="output.Dpanel==2",
-                                                             checkboxGroupInput("CB", label = h5("2. Catch reporting bias",style="color:black"),
-                                                                                choices = CB_list, selected = CB_list),
-                                                             actionLink("All_CB","UNKNOWN")),
-                                            
-                                            conditionalPanel(width=4,condition="output.Dpanel==3",
-                                                             checkboxGroupInput("Beta", label = h5("3. Hyperstability in indices",style="color:black"),
-                                                                                choices = Beta_list, selected = Beta_list),
-                                                             actionLink("All_Beta","UNKNOWN")),
-                                            
-                                            conditionalPanel(width=4,condition="output.Dpanel==4",
-                                                             radioButtons("Err", label = h5("4. Overall data quality",style="color:black"),
-                                                                          choices = Err_list, selected = "Err_bad"),
-                                                             actionLink("All_Err","DEFAULT")),
-                                            value=3),            
+                                         
                                    
                         tabPanel(h4("Fishery",style = "color:black"),
 
@@ -748,7 +708,48 @@ shinyUI(
                                                   actionLink("All_IVSL","MATCH TAC IMPLEMENTATION")),
 
 
-                                 value=2)
+                                 value=2),
+                        tabPanel(h4("Data",style = "color:black"),
+                                 
+                                 conditionalPanel(width=4,condition="output.Dpanel==undefined|output.Dpanel==0",
+                                                  
+                                                  HTML("<br>"),
+                                                  h5("The Data panel provides the option to load fishery data and specify the quality of the data that are available.",style="color:grey"),
+                                                  h5("These questions are used to: ",style="color:grey"),
+                                                  h5(" - identify what management procedures are feasible given the types of data available.",style="color:grey"),
+                                                  h5(" - determine the relative success of the management approaches that rely on differing types of data.",style="color:grey"),
+                                                  h5(""),
+                                                  h5("More detailed help on the data questions can be found in the MERA manual
+                                         : ", a("Section 2.3.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html#23_data_questions", target="_blank"),style="color:grey")),
+                                 
+                                 conditionalPanel(width=4,condition="output.Dpanel==1",
+                                                  
+                                                  h5("1. Load fishery data (optional)",style="color:black"),
+                                                  column(12,style="padding-left:27px",
+                                                         
+                                                         HTML("<br>"),
+                                                         fileInput("Load_Data","Load available data  (.csv .xlsx .rda)"),
+                                                         conditionalPanel(width=4,condition="output.Data==1",
+                                                                          h5("Data Report",style="font-weight:bold"),
+                                                                          downloadButton("Build_Data"," ")
+                                                         )
+                                                  )),
+                                 
+                                 conditionalPanel(width=4,condition="output.Dpanel==2",
+                                                  checkboxGroupInput("CB", label = h5("2. Catch reporting bias",style="color:black"),
+                                                                     choices = CB_list, selected = CB_list),
+                                                  actionLink("All_CB","UNKNOWN")),
+                                 
+                                 conditionalPanel(width=4,condition="output.Dpanel==3",
+                                                  checkboxGroupInput("Beta", label = h5("3. Hyperstability in indices",style="color:black"),
+                                                                     choices = Beta_list, selected = Beta_list),
+                                                  actionLink("All_Beta","UNKNOWN")),
+                                 
+                                 conditionalPanel(width=4,condition="output.Dpanel==4",
+                                                  radioButtons("Err", label = h5("4. Overall data quality",style="color:black"),
+                                                               choices = Err_list, selected = "Err_bad"),
+                                                  actionLink("All_Err","DEFAULT")),
+                                 value=3)     
 
                         #,
                         

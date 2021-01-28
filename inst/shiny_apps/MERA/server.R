@@ -394,6 +394,9 @@ shinyServer(function(input, output, session) {
     # now see whether trimmed data work with the questionnaire
     
     if(!is.null(dattest)){
+      
+      UpdateJsByData(dattest)
+      
       LHYear<<-input$Lyear
       
       if(!is.null(dattest@LHYear)){
@@ -1104,9 +1107,8 @@ shinyServer(function(input, output, session) {
       Mpanel(Mpanel()-1)
     }else if(input$tabs1==3 && Dpanel() >0){
       Dpanel(Dpanel()-1)
-    }else if(input$tabs1==4 && Opanel() >0){
-      Opanel(Opanel()-1)
-    }  
+    }
+    
     UpJust()
 
     Des<<-package_MSClog()
@@ -1122,8 +1124,6 @@ shinyServer(function(input, output, session) {
       Mpanel(Mpanel()+1)
     }else if(input$tabs1==3 && Dpanel() < 4){
       Dpanel(Dpanel()+1)
-    }else if(input$tabs1==4 && Opanel() < 1){
-      Opanel(Opanel()+1)
     }
 
     # Write old values
@@ -1142,8 +1142,6 @@ shinyServer(function(input, output, session) {
       Mpanel(Mpanel()+1)
     }else if(input$tabs1==3 && Dpanel() < 4){
       Dpanel(Dpanel()+1)
-    }else if(input$tabs1==4 && Opanel() < 1){
-      Opanel(Opanel()+1)
     }
     
     # Write old values
