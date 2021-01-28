@@ -4,7 +4,7 @@
 ---
 title: "`r params$set_title`"
 subtitle: "`r params$set_type`"
-author: "`r params$OM@Source`"
+author: "`r params$author`"
 date: "`r Sys.Date()`"
 output: 
   html_document:

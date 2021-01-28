@@ -395,7 +395,7 @@ shinyServer(function(input, output, session) {
     
     if(!is.null(dattest)){
       
-      UpdateJsByData(dattest)
+      #UpdateJsByData(dattest)
       
       LHYear<<-input$Lyear
       
@@ -788,7 +788,7 @@ shinyServer(function(input, output, session) {
       AM("Building MERA questionnaire report")
       withProgress(message = "Building questionnaire report", value = 0, {
       if(checkQs()$error){shinyalert("Incomplete Questionnaire", text=paste("The following questions have not been answered:",paste(temp$probQs,collapse=", ")), type = "warning");stop()}
-      if(MadeOM()==0)OM1<<-makeOM(PanelState)
+      #if(MadeOM()==0)OM1<<-makeOM(PanelState)
       src <- normalizePath('Source/Markdown/OMRep.Rmd')
       src2 <-normalizePath(paste0('www/',input$Skin,'.png'))
      
@@ -806,7 +806,7 @@ shinyServer(function(input, output, session) {
                      PanelState=MSClog[[1]],
                      Just=MSClog[[2]],
                      Des=MSClog[[3]],
-                     OM=OM1,
+                     author=input$Author,
                      ntop=input$ntop,
                      inputnames=inputnames,
                      SessionID=SessionID,
@@ -837,9 +837,7 @@ shinyServer(function(input, output, session) {
         
         library(rmarkdown)
         output<-paste0(tempdir(),"/Data-Report.html")
-        
-        #Report(dat,title=paste0("Data Report for",input$Name),author=input$Author,quiet=T,overwrite=T,dir=getwd(),open=F)
-        
+        incProgress(0.2) 
         tryCatch({
           Report(dat,title=paste0("Data Report for",input$Name),author=input$Author,quiet=T,overwrite=T,open=F,dir=tempdir())
         },
@@ -867,53 +865,33 @@ shinyServer(function(input, output, session) {
 
     content = function(file) {
       AM("Building detailed MERA operating model report")
-      tryCatch({
-        withProgress(message = "Building operating model report", value = 0, {
-          if(checkQs()$error){shinyalert("Incomplete Questionnaire", text=paste("The following questions have not been answered:",paste(temp$probQs,collapse=", ")), type = "warning");stop()}
-          if(MadeOM()==0)OM1<<-makeOM(PanelState)
-          src <- normalizePath('Source/Markdown/OM_full_Rep.Rmd')
-          src2 <-normalizePath(paste0('www/',input$Skin,'.png'))
-          incProgress(0.1)
+     
+      withProgress(message = "Building operating model report", value = 0, {
         
-          MSClog<<-package_MSClog()
-    
-          owd <- setwd(tempdir())
-          on.exit(setwd(owd))
-          file.copy(src, 'OM_full_Rep.Rmd', overwrite = TRUE)
-          file.copy(src2, 'logo.png', overwrite = TRUE) #NEW
-          
-          library(rmarkdown)
-          params <- list(test = input$Name,
-                         set_title=paste0("Full Operating Model Specification Report for ",input$Name),
-                         set_type=paste0("(MERA version ",Version,")"),
-                         PanelState=MSClog[[1]],
-                         Just=MSClog[[2]],
-                         Des=MSClog[[3]],
-                         OM=OM1,
-                         ntop=input$ntop,
-                         inputnames=inputnames,
-                         SessionID=SessionID,
-                         copyright=paste(Copyright,CurrentYr),
-                         tabs=TRUE, 
-                         Pars=OM1,
-                         plotPars=list(),
-                         its=NULL,
-                         nyears=OM1@nyears,
-                         proyears=OM1@proyears
-                           
-          )
-          #saveRDS(params,"C:/temp/params.rda") # ! alert
-          incProgress(0.1)
-          knitr::knit_meta(class=NULL, clean = TRUE) 
-          output<-render(input="OM_full_Rep.Rmd",output_format="html_document", params = params)
-          incProgress(0.8)
-          file.copy(output, file)
-        }) # with progres
-      },
-      error = function(e){
-        AM(paste0(e,"\n"))
-        shinyalert("Full OM report build error", paste(e), type = "info")
-      })  
+        if(checkQs()$error){shinyalert("Incomplete Questionnaire", text=paste("The following questions have not been answered:",paste(temp$probQs,collapse=", ")), type = "warning");stop()}
+        if(MadeOM()==0)OM1<<-makeOM(PanelState)
+        
+        owd <- setwd(tempdir())
+        on.exit(setwd(owd))
+        
+        library(rmarkdown)
+        output<-paste0(tempdir(),"/OM-full-Report.html")
+        
+        incProgress(0.2)
+        tryCatch({
+          plot(OM1,rmd=T,quiet=T,open=F,output_file=output,output_dir = tempdir())
+        },
+        error = function(e){
+          AM(paste0(e,"\n"))
+          shinyalert("Detailed OM report build error", paste(e), type = "info")
+        })
+        
+        incProgress(0.7)
+        file.copy(output, file)
+        incProgress(0.1)
+        
+      }) # with progres
+     
   
     }  # content
   )
