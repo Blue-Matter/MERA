@@ -1,0 +1,121 @@
+---
+title: "MERA User Guide (v6)"
+subtitle: "Method Evaluation and Risk Assessment"
+author: "T. Carruthers (UBC)"
+date: "`r Sys.Date()`"
+output: 
+  html_document:
+    toc: true
+    toc_float: true
+    number_sections: true
+---
+<img src="./Images/openMSE.png" width="150" align="left">
+
+
+<br><br><br>
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library('corpcor')
+library('DLMtool')
+library('dplyr')
+library('formattable')
+library('kableExtra')
+library('knitr')
+library('shiny')
+library('shinyjs')
+library('shinyalert')
+library('MSEtool')
+library('tinytex')
+library('DT')
+library('rmarkdown')
+
+source("./R/MSC4vig.R")
+
+tosource<-list.files("../inst/shiny_apps/MERA/Source/Questionnaire/",full.names = T)
+for(i in 1:length(tosource))source(tosource[i]) # all fishery, management and data plots
+source("./R/global4UG.R") # sources the list objects for the various questions
+source("./R/Q_setup.R")
+source("../inst/shiny_apps/MERA/Source/AI/AI_results.r")
+
+load("./dat/MSEobj")
+MSEobj2<-readRDS("./dat/MSEobj_2.Rdata")
+MSClog<-readRDS("./dat/MSClog.mera")
+PanelState<-MSClog[[1]]
+load("./dat/MSEobj_reb")
+#load("./dat/MSEobj_reb2")
+MSEobj_reb2<-readRDS("./dat/MSEobj_reb_2.Rdata")
+MSEobj_Eval<-MSEobj2
+eff_values<-readRDS("./dat/eff_values.rda")
+Syear=eff_values$df$x[1]
+Lyear=eff_values$df$x[nrow(eff_values$df)]
+input<-c(input,list(Syear=Syear,Lyear=Lyear))
+dat<-readRDS("./dat/dat.rda")
+dat_ind<-readRDS("./dat/dat_ind.rda")
+FT<-FeaseLabs(MPs=MSEobj2@MPs) # uses panel state
+MPcols<-FT$MPcols  # needed for planning color coding
+
+FigInd<-0
+TabInd<-1
+SecInd<-0
+
+#for making the question figures
+
+fcol = rgb(0.4,0.8,0.95)#"#0299f"
+fcol2 = "dark grey"
+icol <- "dodgerblue4"
+maxcol="cadetblue"
+mincol="dark grey"
+
+Qwidth=5
+Qheight=3.5
+Qretina=2
+Qout.width='300px'
+Qout.height='180px'
+
+#for making planning figures
+
+Pwidth=13
+Pheight=13
+Pretina=2
+Pout.width='1000px'
+Pout.height='1000px'
+
+nFish<-19    # number of fishery questions
+nManage<-7   # number of management questions
+nDat<-4      # number of data questions
+
+```
+
+```{r echo=FALSE, include=FALSE}
+#library(knitr); library(dplyr)
+```
+
+
+```{r echo=FALSE, include=FALSE}
+library(knitr)
+rmd.files <- c("Rmds/Introductory/Intro_M.Rmd",
+               "Rmds/Menus/Menus_M.Rmd",
+               "Rmds/Qs/Qs_M.Rmd",
+               "Rmds/Management_Planning/Management_Planning_M.Rmd",
+               "Rmds/Management_Performance/Management_Performance_M.Rmd",
+               "Rmds/Risk_Assessment/Risk_Assessment_M.Rmd",
+               "Rmds/Status_Determination/Status_Determination_M.Rmd",
+               "Rmds/Data/Data_M.Rmd",
+               "Rmds/Support/Support_M.Rmd",
+               "Rmds/Acknowledgements/Acknowledgements_M.Rmd",
+               "Rmds/References/References_M.Rmd",
+               "Rmds/Appendices/Appendices_M.Rmd")
+
+out <- NULL
+for (rmd in rmd.files) {
+  out <- c(out, knitr::knit_child(rmd))
+}
+```
+
+
+```{r, echo=FALSE, results="asis"}
+cat(paste(out, collapse = '\n'))
+```
+

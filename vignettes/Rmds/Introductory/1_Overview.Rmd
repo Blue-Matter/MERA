@@ -1,0 +1,46 @@
+---
+params: 
+    title: ""
+    Pars: "`r list()`"
+    plotPars: "`r list()`"
+    tabs: "`r TRUE`"
+    its: " `r numeric()`"
+    nyears: " `r numeric()`"
+    proyears: " `r numeric()`"
+    date: "`r Sys.Date()`"
+title: "`r params$title`"
+date: "`r params$date`"
+output:
+  html_document
+---
+
+## MERA is under development!
+
+Please note that MERA is currently under development. MERA is beta software and subject to ongoing testing. 
+
+If you find a bug or have a suggestion please contact <tom@bluematterscience.com>  
+
+
+## Overview
+
+Fisheries managers are in need of tools to inform decision making often in the face of imperfect information and high uncertainty. 
+
+By linking a simple user interface and questionnaire (Figure `r paste(SecInd,FigInd+1,sep=".")`) to an operating model and sophisticated simulation software, MERA provides managers with an accessible and powerful tool for selecting management procedures that can achieve their performance objectives, checking that a management procedure that is in use is identifying species at risk, and calculating stock status. 
+
+MERA is intended to better account for uncertainty in the fishery system, prioritizing robust management options and identifying value in alternative data collection and research programs. By focusing on operating models, MERA can provide quantitative outputs that are central to fishery legal frameworks and eco-certification standards, for example probabilistic estimates of stock status relative to reference levels. MERA lessens the reliance on subjective, qualitative scoring systems, increasing transparency and accountability in decision making. 
+
+Furthermore since the App is compatible with the R statistical software operating models, management procedures and diagnostics are all customizable allowing for bespoke state-of-the art closed-loop simulation including MSE. 
+
+
+<br />
+
+<img src="./Images/MERA_frontend.jpg" width="800">
+
+```{r frontend, include=FALSE}
+
+FigInd<-FigInd+1
+
+```
+
+Figure `r paste(SecInd,FigInd,sep=".")`. The MERA user interface. 
+

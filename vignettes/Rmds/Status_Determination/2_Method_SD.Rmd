@@ -1,0 +1,48 @@
+---
+params: 
+    title: ""
+    Pars: "`r list()`"
+    plotPars: "`r list()`"
+    tabs: "`r TRUE`"
+    its: " `r numeric()`"
+    nyears: " `r numeric()`"
+    proyears: " `r numeric()`"
+    date: "`r Sys.Date()`"
+title: "`r params$title`"
+date: "`r params$date`"
+output:
+  html_document
+---
+
+
+
+## Running a Status Determination
+
+In the options panel of the MERA questionnaire there is the option to load fishery data. These data can include time series of relative abundance indices, mean length and catch data. 
+
+Once loaded status determination can be run - it automatically detects what data types are available and identifies those status estimation methods approaches that are compatible (the user can select the approach from the settings menu). 
+
+Each modelling approach for estimating status relies on a varying combination of data types that are coded according to the data used: 
+
+* C: catch data (annual)
+* I: index of relative abundance (annual)
+* M: mean length of fish in the catch (annual)
+* L: length composition data (year by length class)
+* A: age composition data (year by age)
+                         
+Approaches that use only catch data or length compositions assume a pattern in annual fishing mortality rate defined by the annual fishing effort of Fishery Question 5 and the catchability changes of Fishery Question 7.
+
+
+
+<img src="./Images/Status_determination_mode.jpg" width="600">
+
+```{r figplus_StatDet, include=FALSE}
+
+FigInd<-FigInd+1
+
+```
+
+Figure `r paste(SecInd,FigInd,sep=".")`. The controls for the status determination mode.  
+
+
+

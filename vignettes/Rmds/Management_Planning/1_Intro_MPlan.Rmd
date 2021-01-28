@@ -1,0 +1,33 @@
+---
+params: 
+    title: ""
+    Pars: "`r list()`"
+    plotPars: "`r list()`"
+    tabs: "`r TRUE`"
+    its: " `r numeric()`"
+    nyears: " `r numeric()`"
+    proyears: " `r numeric()`"
+    date: "`r Sys.Date()`"
+title: "`r params$title`"
+date: "`r params$date`"
+output:
+  html_document
+---
+
+
+
+## Background to management planning  
+
+Given what is currently known (and not known) about a stock, its fishery and research program:
+
+* what management approach is likely to best achieve management objectives (MP selection)? 
+* what data collection processes are most important in determining management performance (Value of information)?
+* which current uncertainties have the greatest influence of management performance (Cost of current uncertainties)?
+
+Management Planning is the most complex MERA mode and provides closed-loop simulation testing of numerous management procedures and diagnostics to help managers identify research priorities. 
+
+
+
+
+
+
