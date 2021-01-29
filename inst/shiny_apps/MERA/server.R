@@ -1,7 +1,7 @@
 library(shiny)
 library(MSEtool)
 library(DLMtool)
-#library(SAMtool)
+# library(SAMtool)
 library(kableExtra)
 library(formattable)
 library(knitr)
@@ -12,6 +12,7 @@ library(DT)
 library(mvtnorm)
 library(cowplot)
 library(shinyBS)
+library(ggplot2)
 
 options(shiny.maxRequestSize=1000*1024^2)
 
@@ -523,12 +524,15 @@ shinyServer(function(input, output, session) {
       if(!exists("RAobj"))RAobj=NULL
       if(!exists("MSEobj_Eval"))MSEobj_Eval=NULL
       if(!exists("Status"))Status=NULL
-      if(!exists("OM"))OM1=NULL
+      if(!exists("OM1"))OM1=NULL
       if(!exists("SampList"))SampList=NULL
       MPnams<-avail('MP')
       MPnams<-MPnams[!(MPnams%in%c(ls("package:MSEtool"),ls("package:DLMtool")))]
-      MPList<-list()
-      for(i in 1:length(MPnams))MPList[[MPnams[i]]]<-get(MPnams[i])
+      MPList<-NULL
+      if(length(MPnams)>0){
+        MPList<-list()
+        for(i in 1:length(MPnams))MPList[[MPnams[i]]]<-get(MPnams[i])
+      }
       saveRDS(list(MSEobj=MSEobj,MSEobj_reb=MSEobj_reb,RAobj=RAobj,MSEobj_Eval=MSEobj_Eval,MSClog=MSClog,Status=Status,OM=OM1,SampList=SampList,MPList=MPList),file)
 
     }
@@ -959,7 +963,7 @@ shinyServer(function(input, output, session) {
         incProgress(0.1)
         knitr::knit_meta(class=NULL, clean = TRUE) 
         
-        output<-plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
+        output<-SAMtool:::plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
         incProgress(0.8)
         file.copy(output, file)
       }) # end of progress
