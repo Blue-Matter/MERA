@@ -166,29 +166,29 @@ shinyServer(function(input, output, session) {
   # (B) add the name to the list at line Skin_nams =  (below)   
   # (C) go to the UI at tags$a(img(src = "DLMtool.png" and add a conditional panel
   
-  tt <- try(!is.null(MERA:::PKGENVIR$skin), silent=TRUE)
-  if (class(tt) == 'try-error') {
+  #tt <- try(!is.null(MERA:::PKGENVIR$skin), silent=TRUE)
+  #if (class(tt) == 'try-error') {
     skin <- 'MSC'
-  } else {
-    if (!is.null(MERA:::PKGENVIR$skin)) {
-      skin <- MERA:::PKGENVIR$skin
-    } else {
-      skin <- "MSC"
-    }
-  }
+  #} else {
+   # if (!is.null(MERA:::PKGENVIR$skin)) {
+    #  skin <- MERA:::PKGENVIR$skin
+    #} else {
+    #  skin <- "MSC"
+    #}
+  #}
        
   dat<-dat_int<-NULL
       
-  Skin_nams<<-c("MSC")#,"ABNJ","Generic") # unlist(strsplit(list.files(path="./Source/Skins"),".R"))
-  updateSelectInput(session=session,inputId="Skin",choices=Skin_nams[length(Skin_nams):1],selected=skin)
+  Skin_nams<<-c("MSC")#,"ABNJ")#,"Generic") # unlist(strsplit(list.files(path="./Source/Skins"),".R"))
+  updateSelectInput(session=session,inputId="Skin",choices=Skin_nams[1:length(Skin_nams)],selected=skin)
   
-  observe({
-    query <- parseQueryString(session$clientData$url_search)
-    if (!is.null(query[['skin']])) {
-      updateSelectInput(session, "Skin", label = "", choices = NULL,
-                        selected = query[['skin']])
-    }
-  })
+ # observe({
+  #  query <- parseQueryString(session$clientData$url_search)
+   # if (!is.null(query[['skin']])) {
+    #  updateSelectInput(session, "Skin", label = "", choices = NULL,
+     #                   selected = query[['skin']])
+    #}
+  #})
   
   observeEvent(input$Skin,{
     temp<-input$Skin
@@ -207,7 +207,7 @@ shinyServer(function(input, output, session) {
   output$SessionID<-renderText(SessionID)
 
   
-  Copyright<-"Open Source, GPL-2"
+  Copyright<-"Creative Commons"
   
   # Log stuff
   Log_text <- reactiveValues(text=paste0("-------- Start of Session -------- \nSession ID: ",SessionID,"\nUser ID: ",USERID))
@@ -462,6 +462,7 @@ shinyServer(function(input, output, session) {
       
       if(checkQs()$error){shinyalert("Incomplete Questionnaire", text=paste("The following questions have not been answered:",paste(temp$probQs,collapse=", ")), type = "warning");stop()}
       if(MadeOM()==0)OM1<-makeOM(PanelState,nsim=input$nsim)
+      OM1@cpars$control$progress=NULL
       AM(paste0("Operating model saved: ", file))
       doprogress("Saving Operating Model")
       saveRDS(OM1,file)
@@ -477,7 +478,10 @@ shinyServer(function(input, output, session) {
 
       tryCatch({
         
-        OM_L<<-readRDS(file=filey$datapath)
+        OM_temp<-readRDS(file=filey$datapath)
+        OM_temp@cpars$control=list(progress=TRUE,ntrials=1000,fracD=0.2)
+        SampList<<-data.frame(Esdrand=runif(OM_temp@nsim,0,1),qhssim=runif(OM_temp@nsim,0,1),Sel50sim=runif(OM_temp@nsim,0,1),Ahsim=runif(OM_temp@nsim,0,1),Vhsim=runif(OM_temp@nsim,0,1),Asim=runif(OM_temp@nsim,0,1),Vsim=runif(OM_temp@nsim,0,1),initD=runif(OM_temp@nsim,0,1),Cbias=runif(OM_temp@nsim,0,1))
+        OM_L<<-OM_temp
         #Start(1)
         
       },
@@ -716,7 +720,11 @@ shinyServer(function(input, output, session) {
       if(input$Mode=="Management Planning"){
         Calc_Plan()
       }else if(input$Mode=="Management Performance"){
-        Calc_Perf()       
+        if(DataInd()==1){
+          Calc_Perf() 
+        }else{
+          shinyalert("Indicator data needed", text="To run Management Performance Mode you must load a data file that has data past the last historical year (LHYear in the data file)", type = "warning")
+        }  
       }else{
         Calc_Status()
       }

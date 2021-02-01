@@ -252,7 +252,7 @@ post_marg_plot<-function(MSEobj_Eval,dat,dat_ind,options=list()){
   }
   
   
-  par(mfrow=c(ceiling((2+indy)/2),2),mai=c(0.3,0.3,0.35,0.01),omi=c(0.35,0.3,0.05,0.05))
+  par(mfrow=c(ceiling((2+indy)/2),2),mai=c(0.4,0.4,0.35,0.05),omi=c(0.35,0.3,0.05,0.05))
   ppdplot(pred=predCat,obs=obsCat,yrlab,lab="Catch")
   
   legend('topleft',legend=c("95% PI","90% PI","50% PI"),fill=c("grey90","grey78","grey66"),title="Pred. Data",bg="#ffffff20",box.col="#ffffff20")

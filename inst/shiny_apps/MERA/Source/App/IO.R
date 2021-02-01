@@ -74,6 +74,9 @@ Update_Questionnaire<-function(MSClog){
     updateTextInput(session, "Agency",   value= MSClog[[3]]$Agency)
     #saveRDS(MSElog,"C:/temp/MSClog.rda")
     
+    if(!("Syear" %in% names(MSClog[[3]])))MSClog[[3]]$Syear<-1
+    if(!("Lyear" %in% names(MSClog[[3]])))MSClog[[3]]$Lyear<-MSClog[[3]]$nyears
+    
     if("Nyears" %in% names(MSClog[[3]])){
       updateNumericInput(session, "Lyear",   value= 2018)
       updateNumericInput(session, "Syear",   value= 2018-MSClog[[3]]$Nyears+1)

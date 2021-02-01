@@ -292,7 +292,8 @@ shinyUI(
                    h5(tags$b("Operating model conditioning / Status Determination approach (fitting to data)",style="color:#347ab6")), 
                      
                      column(6, checkboxInput("OM_C","Use conditioned OM for analyses",value=TRUE),style="height:75px"),
-                     column(6,conditionalPanel("input.OM_C",selectInput("Cond_ops", label = h5("Conditioning Model"), choices=c("None"),selected="None")),style="height:75px"),
+                     column(6,conditionalPanel("input.OM_C",selectInput("Cond_ops", label = h5("Conditioning Model"), choices=c("None"),selected="None")),
+                                                                   style="height:75px"),
                      column(12,checkboxInput("catchcond",label="Estimate annual fishing mortality rates",value=FALSE)),
                    
                      column(6,checkboxInput("C_eq",label="Assume initial equilibrium catches in conditioning",value=FALSE),style="height:75px"),
@@ -397,7 +398,7 @@ shinyUI(
         column(12,h5(tags$b("About",style="color:#347ab6")),
           column(12,h5("MERA links a graphical questionnaire to the powerful openMSE libraries to calculate population status and management performance. ",style = "color:grey")),
           column(12,h5("MERA was developed by", a("Blue Matter Science Ltd.",href="https://www.bluematterscience.com",target="blank"), 
-                       " and is available under a creative commons license as an open source R package: ",a("www.github.com/blue-matter/MERA",href="www.github.com/blue-matter/MERA",target="blank"),style = "color:grey")),
+                       " and is available under a Creative Commons license as an open source R package: ",a("www.github.com/blue-matter/MERA",href="www.github.com/blue-matter/MERA",target="blank"),style = "color:grey")),
           hr()
         ),
         
@@ -455,7 +456,7 @@ shinyUI(
               h5(textOutput("Version"),style = "color:grey"), 
               h5(textOutput("Dependencies_help"),style = "color:grey"),
               h5(textOutput("SessionID_help"),style = "color:grey"),
-              h5("Open Source, GPL-2, 2020",style = "color:grey")
+              h5("Open Source, Creative Commons, 2021",style = "color:grey")
           )
         ),
         column(12, tags$hr(style="margin-top: 3px; margin-bottom: 3px"),
@@ -1579,7 +1580,7 @@ shinyUI(
        column(6,style="height:40px"),
        column(2,style="height:40px; padding:9px",textOutput("Dependencies")),
        column(2,style="height:40px; padding:9px",textOutput("SessionID")),
-       column(2,style="height:40px", h6("Open Source, GPL-2, 2020"))
+       column(2,style="height:40px", h6("Creative Commons, 2021"))
 
     ) # end of fluid page
   

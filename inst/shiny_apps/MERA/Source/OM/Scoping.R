@@ -220,8 +220,17 @@ Detect_scope<-function(dat,simno=1,minndat=5){
   }
 
   if(goodslot(dat@ML,LHy))  ML<-dat@ML[simno,yind]
+  yrange<-function(x){
+    if(all(is.na(x))){
+     return(0)
+    }else{
+     return(max((1:length(x))[!is.na(x)])-min((1:length(x))[!is.na(x)]))
+    }
+  }
 
   condC<-sum(!is.na(Cat))==LHy
+  condCany<-sum(!is.na(Cat))>0 & !condC # catch can be used for scale even if only one datum
+  condCsome<-yrange(Cat)>9 & !condC# catch spans more than 10 years (can be used with just effort)
   condE<-TRUE#sum(!is.na(Eff))==LHy # always possible from sketched effort  
   condI<-sum(!is.na(Ind))>1
   condA<-sum(!is.na(CAA))>minndat
@@ -229,16 +238,19 @@ Detect_scope<-function(dat,simno=1,minndat=5){
   condM<-sum(!is.na(ML))>minndat
 
   # Possible data combinations
-  datTypes<-c("C","E","I","A","L","M")
+  datTypes<-c("C","K","J","E","I","A","L","M") # including three catch conditions C K J
+  convTypes<-c("C","C","C","E","I","A","L","M") # translated back to whether catch can be used in conditioning
   
   # Available data combinations
   Alist<-list()
   Alist[[1]]<-unique(c(condC,FALSE))
-  Alist[[2]]<-unique(c(condE,FALSE))
-  Alist[[3]]<-unique(c(condI,FALSE))
-  Alist[[4]]<-unique(c(condA,FALSE))
-  Alist[[5]]<-unique(c(condL,FALSE))
-  Alist[[6]]<-unique(c(condM,FALSE))
+  Alist[[2]]<-unique(c(condCany,FALSE))
+  Alist[[3]]<-unique(c(condCsome,FALSE))
+  Alist[[4]]<-unique(c(condE,FALSE))
+  Alist[[5]]<-unique(c(condI,FALSE))
+  Alist[[6]]<-unique(c(condA,FALSE))
+  Alist[[7]]<-unique(c(condL,FALSE))
+  Alist[[8]]<-unique(c(condM,FALSE))
 
   Acond<-expand.grid(Alist)
   names(Acond)<-datTypes
@@ -246,16 +258,19 @@ Detect_scope<-function(dat,simno=1,minndat=5){
   #Acond<-Acond[!((Acond$E & Acond$I) & apply(Acond,1,sum)>2),] # remove anything with E and I that has something else
   Acond<-Acond[!(Acond$A&Acond$L),]                    # remove age + length conditioning
   Acond<-Acond[!(Acond$L&Acond$M),]                    # remove length + mean length conditioning
+  Acond<-Acond[!(Acond$K & !Acond$E),]                 # remove where there is some catch but not complete effort
+  Acond<-Acond[!(Acond$K & (!Acond$L&!Acond$A&!Acond$I&!Acond$M)),]                 # remove where there is some catch but not accompanying length, age, index or mean length
+  Acond<-Acond[!(Acond$J & !Acond$E),]                 # remove where there is some catch but not accompanying length, age, index or mean length
+  Acond<-Acond[!(Acond$K & Acond$J),]
   
   nA<-nrow(Acond)
   DataCode<-rep(NA,nA-1)
   for(i in 1:(nA-1)){
-    DataCode[i]<-paste(datTypes[unlist(Acond[i,])],collapse="_")
+    DataCode[i]<-paste(convTypes[unlist(Acond[i,])],collapse="_")
   }
   #DataCode[nA]<-"None"
-
-  DataCode
-
+  unique(DataCode)
+  
 }
 
 

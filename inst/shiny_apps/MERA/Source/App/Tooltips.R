@@ -1,6 +1,6 @@
 # Tooltips
 
-ntips<<-16
+ntips<<-18
 ids<-list()
 titles<-list()
 placements<-as.list(rep('bottom',ntips))
@@ -46,7 +46,14 @@ titles[[10]]<-"The number of simulations (individual unique fishery instances) u
 #Non-converged simulations are dropped."
 
 ids[[11]]<-"OM_C"
-titles[[11]]<-"Should MSE analyses use the conditioned operating model or just use that determined by only the Questionnaire?"
+titles[[11]]<-"Should MSE analyses use the conditioned operating model or just use that determined by only the Questionnaire?
+   When the user loads a data file, if there are sufficient data they can opt to condition (fit) their
+   MERA-specified operating model on those data. MERA automatically detects what conditioning approaches 
+   may be applied given the data provided. It can make use of catch (C), complete effort (E), length composition (L), 
+   age composition (A), mean length (M) and relative indices of total biomass, spawning biomass, and vulnerable
+   biomass (I). If the user specifies a conditioning model that includes effort (E), the model will assume that 
+   apical fishing mortality rates are proportional to effort while attempting to fit all other data. Conditioning models that
+   do not include catches (C), will be scale-free (unfished recruitment is not updated)"
 
 ids[[12]]<-"C_eq_val"
 titles[[12]]<-"The equilibrium catches that were taken on average, prior to the first year that catch data are provided. This provides a way to 
@@ -68,8 +75,14 @@ titles[[16]]<-"The maximum apical (most selected age class), fishing mortality r
                maximum harvest rate of 95 per cent for the most selected age class."
 
 
-#ids[[6]]<-"Dep_reb"
-#titles[[6]]= "The Management Planning mode runs a second projection starting at a user-specified level of depletion to evaluate
-#the abilty of management procedures to rebuild from depleted levels."
+ids[[17]]<-"Dep_reb"
+titles[[17]]= "The Management Planning mode runs a second projection starting at a user-specified level of depletion to evaluate
+    the abilty of management procedures to rebuild from depleted levels."
+
+ids[[18]]<-"catchcond"
+titles[[18]]= "Where the conditioning model does not include effort 'E', the model defaults to a stock reduction analysis formulation that solves the 
+    Baranov equation in each time step - which means that catches are removed exactly and annual apical F parameters do not need to be estimated. If the user has
+    issues with applying the SRA approach they can opt to estimate the annual apical F parameters and accept observation error in the catches by checking this box"
+
 
 

@@ -16,7 +16,7 @@ P50_1 <<- function (MSEobj = NULL, Ref = 0.5, Yrs = NULL) {
                             Yrs[1], " - ", Yrs[2], ")")
   }
   PMobj@Ref <- Ref
-  PMobj@Stat <- MSEobj@B_BMSY[, , Yrs[1]:Yrs[2]]
+  PMobj@Stat <- MSEobj@SB_SBMSY[, , Yrs[1]:Yrs[2]]
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
   PMobj@MPs <- MSEobj@MPs
@@ -37,7 +37,7 @@ P50_2 <<- function (MSEobj = NULL, Ref = 0.5, Yrs = NULL) {
                             Yrs[1], " - ", Yrs[2], ")")
   }
   PMobj@Ref <- Ref
-  PMobj@Stat <- MSEobj@B_BMSY[, , Yrs[1]:Yrs[2]]
+  PMobj@Stat <- MSEobj@SB_SBMSY[, , Yrs[1]:Yrs[2]]
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
   PMobj@MPs <- MSEobj@MPs
@@ -61,7 +61,7 @@ PB100a<<-function (MSEobj = NULL, Ref = 1, Yrs = -40) {
   # }
   # 
   PMobj@Ref <- Ref
-  PMobj@Stat <- array(MSEobj@B_BMSY[, , Yrs[1]:Yrs[2]], dim=c(MSEobj@nsim, MSEobj@nMPs, length(Yrs[1]:Yrs[2])))
+  PMobj@Stat <- array(MSEobj@SB_SBMSY[, , Yrs[1]:Yrs[2]], dim=c(MSEobj@nsim, MSEobj@nMPs, length(Yrs[1]:Yrs[2])))
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
   PMobj@MPs <- MSEobj@MPs
@@ -75,8 +75,8 @@ Yield1 <<- function (MSEobj = NULL, Ref = 1, Yrs = -5) {
   PMobj@Name <- paste0("Yield relative to Reference Yield (Years ", 
                        Yrs[1], "-", Yrs[2], ")")
   PMobj@Caption <- "Average relative long-term yield"
-  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@C[, , Yrs[1]:Yrs[2]]))
-  PMobj@Stat <- MSEobj@C[, , Yrs[1]:Yrs[2]]/RefYd
+  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@Catch[, , Yrs[1]:Yrs[2]]))
+  PMobj@Stat <- MSEobj@Catch[, , Yrs[1]:Yrs[2]]/RefYd
   PMobj@Ref <- Ref
   PMobj@Prob <- calcProb(PMobj@Stat, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
@@ -90,8 +90,8 @@ STY1 <<- function (MSEobj = NULL, Ref = 1, Yrs = 10) {
   PMobj <- new("PMobj")
   PMobj@Name <- "Average short-term yield"
   PMobj@Caption <- "Short-Term Yield"
-  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@C[, , Yrs[1]:Yrs[2]]))
-  PMobj@Stat <- MSEobj@C[, , Yrs[1]:Yrs[2]]/RefYd
+  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@Catch[, , Yrs[1]:Yrs[2]]))
+  PMobj@Stat <- MSEobj@Catch[, , Yrs[1]:Yrs[2]]/RefYd
   PMobj@Ref <- Ref
   PMobj@Prob <- calcProb(PMobj@Stat, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
@@ -105,8 +105,8 @@ LTY1 <<- function (MSEobj = NULL, Ref = 1, Yrs = -40) {
   PMobj <- new("PMobj")
   PMobj@Name <- "Long-Term Yield"
   PMobj@Caption <- "Long-Term Yield"
-  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@C[, , Yrs[1]:Yrs[2]]))
-  PMobj@Stat <- MSEobj@C[, , Yrs[1]:Yrs[2]]/RefYd
+  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@Catch[, , Yrs[1]:Yrs[2]]))
+  PMobj@Stat <- MSEobj@Catch[, , Yrs[1]:Yrs[2]]/RefYd
   PMobj@Ref <- Ref
   PMobj@Prob <- calcProb(PMobj@Stat, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
@@ -124,11 +124,11 @@ AAVY1 <<- function (MSEobj = NULL, Ref = 0.2, Yrs = NULL) {
   y1<- Yrs[1]:(Yrs[2]-1) # year index
   y2<-(Yrs[1]+1):Yrs[2] 
   
-  MSEobj@C[MSEobj@C<tiny] <- tiny
+  MSEobj@Catch[MSEobj@Catch<tiny] <- tiny
   if (MSEobj@nMPs > 1) {
-    AAVY <- apply(((((MSEobj@C[, , y1] - MSEobj@C[, , y2])/MSEobj@C[, , y2])^2)^0.5), c(1, 2), mean)
+    AAVY <- apply(((((MSEobj@Catch[, , y1] - MSEobj@Catch[, , y2])/MSEobj@Catch[, , y2])^2)^0.5), c(1, 2), mean)
   } else {
-    AAVY <- array(apply(((((MSEobj@C[,1,y1]-MSEobj@C[,1,y2])/MSEobj@C[,1,y2])^2)^0.5),c(1),mean))
+    AAVY <- array(apply(((((MSEobj@Catch[,1,y1]-MSEobj@Catch[,1,y2])/MSEobj@Catch[,1,y2])^2)^0.5),c(1),mean))
   }
   PMobj@Stat <- AAVY
   PMobj@Ref <- Ref
@@ -334,12 +334,12 @@ Tabs[[4]]<- function(MSEobj, MSEobj_reb,options=list(res=5),rnd=1) {
 #   ind<-1+(0:1000*options$res)
 #   ind<-ind[ind<=proyears]
 #   
-#   TRP<-round(apply(MSEobj@B_BMSY>1,2:3,mean)*100,rnd)[,ind]
+#   TRP<-round(apply(MSEobj@SB_SBMSY>1,2:3,mean)*100,rnd)[,ind]
 #   Tab1<-as.data.frame(cbind(c("Current effort", "Current catches", "FMSY fishing", "Zero fishing"),TRP),stringsAsFactors = F)
 #   for(i in 2:ncol(Tab1)) Tab1[,i]<-as.numeric(Tab1[,i])
 #   colnams<-c("MP",ind+Current_Year)
 #   names(Tab1)<-colnams
-#   Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+#   Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
 #   caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
 #   datatable(Tab1,caption=caption,options=list(dom='t'))%>%
 #     formatStyle(columns = 2:ncol(Tab1), valueColumns = 2:ncol(Tab1), color = styleInterval(c(50,100),c('red','orange','green')))
@@ -614,7 +614,7 @@ Figs[[7]] <- function(MSEobj,MSEobj_reb,options=list()) {
     
     # Calc Tmin 
     NFind <- match("NFref", MSEobj_reb@MPs)
-    Tmin <- min(which(apply(MSEobj_reb@B_BMSY[,NFind, ] > 1, 2, mean) > 0.5)) # first year with >50% prob B > BMSY
+    Tmin <- min(which(apply(MSEobj_reb@SB_SBMSY[,NFind, ] > 1, 2, mean) > 0.5)) # first year with >50% prob B > BMSY
     
     # Mean Generation Time
     MGT <- round(mean(MSEobj_reb@OM$MGT),0)
@@ -643,7 +643,7 @@ Figs[[8]] <- function(MSEobj,MSEobj_reb,options=list()) {
   } else {
     # Calc Tmin 
     NFind <- match("NFref", MSEobj_reb@MPs)
-    Tmin <- min(which(apply(MSEobj_reb@B_BMSY[,NFind, ] > 1, 2, mean) > 0.5)) # first year with >50% prob B > BMSY
+    Tmin <- min(which(apply(MSEobj_reb@SB_SBMSY[,NFind, ] > 1, 2, mean) > 0.5)) # first year with >50% prob B > BMSY
     
     # Mean Generation Time
     MGT <- round(mean(MSEobj_reb@OM$MGT),0)
@@ -675,7 +675,7 @@ FeaseLabs<-function(MPs,dat=NA){
   nMPs<-length(MPs) 
   
   # Proper Data Feasibility based on complex fease analysis by MP
-  tempdat<-tempdat0<-DLMtool::SimulatedData
+  tempdat<-tempdat0<-MSEtool::SimulatedData
   tempdat@Cat<-array(NA,dim(tempdat0@Cat))
   tempdat@Ind<-array(NA,dim(tempdat0@Ind))
   tempdat@CAL<-array(NA,dim(tempdat0@CAL))
@@ -1048,7 +1048,7 @@ Tabs[[7]]<- function(MSEobj, MSEobj_reb,options=list(res=5),rnd=1) {
     
     MGT <- round(mean(MSEobj_reb2@OM$MGT),0)
     NFind <- match("NFref", MSEobj_reb2@MPs)
-    Tmin <- min(which(apply(MSEobj_reb2@B_BMSY[,NFind, ] > 1, 2, mean) > 0.5)) # first year with >50% prob B > BMSY
+    Tmin <- min(which(apply(MSEobj_reb2@SB_SBMSY[,NFind, ] > 1, 2, mean) > 0.5)) # first year with >50% prob B > BMSY
     
     Yrs <- list(c(MGT+Tmin, MGT+Tmin))
     for (X in 1:length(PMlist)) {
@@ -1174,12 +1174,12 @@ Tabs[[1]]<-function(MSEobj_Eval,dat,dat_ind,options=list(res=1),res=5,rnd=1){
   YIU<-length(dat_ind@Year)-length(dat@Year)
   nMPs<-MSEobj_Eval@nMPs
   proyears<-MSEobj_Eval@proyears
-  ind<-1:min(5,proyears)
+  ind<-1:min(YIU,proyears)
   
-  LRP<-matrix(round(apply(MSEobj_Eval@B_BMSY[,,1:YIU,drop=FALSE]>0.5,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
+  LRP<-matrix(round(apply(MSEobj_Eval@SB_SBMSY[,,1:YIU,drop=FALSE]>0.5,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
   Tab1<-as.data.frame(cbind(MSEobj_Eval@MPs,LRP))
   
-  colnams<-c("MP",Current_Year-((YIU-1):0))
+  colnams<-c("MP",max(dat@Year)+(1:YIU))
   names(Tab1)<-colnams
   Tab1$MP<-as.character(Tab1$MP)
   
@@ -1188,7 +1188,7 @@ Tabs[[1]]<-function(MSEobj_Eval,dat,dat_ind,options=list(res=1),res=5,rnd=1){
   Tab1$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab1$MP[MPwithurl],"</a>")
   
   
-  Bdeps<-MSEobj_Eval@OM$D/MSEobj_Eval@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+  Bdeps<-MSEobj_Eval@OM$D/MSEobj_Eval@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
   caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
   datatable(Tab1,caption=caption,extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
             options=list(buttons = 
@@ -1215,9 +1215,9 @@ Tabs[[2]]<-function(MSEobj_Eval, dat,dat_ind,options=list(burnin=10,res=1),rnd=1
   proyears<-MSEobj_Eval@proyears
   ind<-1:min(YIU,proyears)
   
-  TRP<-matrix(round(apply(MSEobj_Eval@B_BMSY[,,ind,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
+  TRP<-matrix(round(apply(MSEobj_Eval@SB_SBMSY[,,ind,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
   Tab2<-as.data.frame(cbind(MSEobj_Eval@MPs,TRP))
-  colnams<-c("MP",Current_Year-((YIU-1):0))
+  colnams<-c("MP",max(dat@Year)+(1:YIU))
   names(Tab2)<-colnams
   Tab2$MP<-as.character(Tab2$MP)
   
@@ -1225,7 +1225,7 @@ Tabs[[2]]<-function(MSEobj_Eval, dat,dat_ind,options=list(burnin=10,res=1),rnd=1
   MPwithurl <- !is.na(URLs) 
   Tab2$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab2$MP[MPwithurl],"</a>")
   
-  Bdeps<-MSEobj_Eval@OM$D/MSEobj_Eval@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+  Bdeps<-MSEobj_Eval@OM$D/MSEobj_Eval@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
   caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
   datatable(Tab2,caption=caption, extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
             options=list(buttons = 
@@ -1254,7 +1254,7 @@ Tabs[[3]]<-function(MSEobj_Eval,dat,dat_ind,options=list(burnin=10,res=1),rnd=1)
   ind<-1:min(YIU,proyears)
   RP<-matrix(round(apply(B_B0[,,ind,drop=F]>0.2,2:3,mean)*100,rnd),nrow=nMPs)
   Tab3<-as.data.frame(cbind(MSEobj_Eval@MPs,RP))
-  colnams<-c("MP",Current_Year-((YIU-1):0))
+  colnams<-c("MP",max(dat@Year)+(1:YIU))
   names(Tab3)<-colnams
   Tab3$MP<-as.character(Tab3$MP)
   
@@ -1262,7 +1262,7 @@ Tabs[[3]]<-function(MSEobj_Eval,dat,dat_ind,options=list(burnin=10,res=1),rnd=1)
   MPwithurl <- !is.na(URLs) 
   Tab3$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab3$MP[MPwithurl],"</a>")
   
-  Bdeps<-MSEobj_Eval@OM$D#MSEobj_reb@B_BMSY[,1,1]#
+  Bdeps<-MSEobj_Eval@OM$D#MSEobj_reb@SB_SBMSY[,1,1]#
   caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% of unfished SSB" )
   datatable(Tab3,caption=caption,extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
             options=list(buttons = 
@@ -1279,7 +1279,6 @@ Tabs[[3]]<-function(MSEobj_Eval,dat,dat_ind,options=list(burnin=10,res=1),rnd=1)
   
 }
 
-
 # --- Figures ---
 
 Fig_title[[2]] <- "Figure 1. Biomass projected since MP adoption"
@@ -1295,98 +1294,14 @@ Figs[[3]]<-function(MSEobj_Eval,dat,dat_ind,options=list()) B0proj(MSEobj_Eval,M
 Fig_dim[[3]] <- function(dims)list(height=420,width=600)
 
 Fig_title[[4]] <- "Figure 3. Posterior predicted data versus those observed"
-Fig_text[[4]] <- "The 'cloud' of posterior predicted data are represented by the grey shaded areas that"
+Fig_text[[4]] <- "The 'cloud' of posterior predicted data are represented by the grey shaded areas. Points are observed data since an MP has been in use and are color-coded according to their agreement with posterior predictions."
 
-Figs[[4]]<-function(MSEobj_Eval,dat,dat_ind,options=list()){
-  
-  YIU=length(dat_ind@Year)-length(dat@Year)
-  styr=max(dat@Year)-min(dat@Year)
-  PPD<-MSEobj_Eval@Misc$Data[[1]]
-  
-  # Standardization
-  predCat<-(PPD@Cat/PPD@Cat[,styr])[,styr+(1:YIU),drop=F]
-  predInd<-(PPD@Ind/PPD@Ind[,styr])[,styr+(1:YIU),drop=F]
-  predML<-(PPD@ML/PPD@ML[,styr])[,styr+(1:YIU),drop=F]
-  
-  # Standardization
-  obsCat<-(dat_ind@Cat/dat_ind@Cat[,styr])[styr+(1:YIU)]
-  obsInd<-(dat_ind@Ind/dat_ind@Ind[,styr])[styr+(1:YIU)]
-  obsML<-(dat_ind@ML/dat_ind@ML[,styr])[styr+(1:YIU)]
-  yrlab<-dat_ind@Year[styr+(1:YIU)]
-  
-  ppdplot<-function(pred,obs,yrlab,p=c(0.025,0.05,0.25,0.75,0.95,0.975),pcols=c("grey90","grey78","grey66"),lab="",pcex=1.3){
-    
-    qmat<-apply(pred,2,quantile,p)
-    nobs<-length(obs)
-    ylim<-range(pred,obs)
-    plot(range(yrlab),ylim,col="white")
-    yind<-c(1:nobs,nobs:1)
-    rind<-nobs:1
-    polygon(yrlab[yind],c(qmat[1,],qmat[6,rind]),col=pcols[1],border=pcols[1])
-    polygon(yrlab[yind],c(qmat[2,],qmat[5,rind]),col=pcols[2],border=pcols[2])
-    polygon(yrlab[yind],c(qmat[3,],qmat[4,rind]),col=pcols[3],border=pcols[3])
-    
-    #obs<-qmat[cbind(1:nobs,1:nobs)]-0.02
-    ocol<-rep("black",nobs)
-    ocol[obs<qmat[2,]|obs>qmat[5,]]<-"orange"
-    ocol[obs<qmat[1,]|obs>qmat[6,]]<-"red"
-    
-    points(yrlab,obs,col=ocol,pch=19,cex=pcex)
-    
-    #points(yrlab,obs,pch=1,cex=pcex)
-    
-    mtext(lab,3,line=0.6,font=2)
-    
-  }
-  
-  par(mfrow=c(1,3),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
-  ppdplot(pred=predCat,obs=obsCat,yrlab,lab="Catch")
-  ppdplot(pred=predML,obs=obsML,yrlab,lab="Mean Length in Catch")
-  ppdplot(pred=predInd,obs=obsInd,yrlab,lab="Index of Abundance")
-  mtext("Year",1,line=1.5,outer=T)
-  mtext(paste("Data relative to",yrlab[1]-1),2,line=1.5,outer=T)
-  
-  legend('topleft',legend=c("95% PI","90% PI","50% PI"),fill=c("grey90","grey78","grey66"),title="Pred. Data")
-  legend('topright',legend=c("Consistent","Borderline","Inconsistent"),pch=19,col=c("black","orange","red"),title="Obs. Data",text.col=c("black","orange","red"))
-  
-} 
-Fig_dim[[4]] <- function(dims)list(height=400,width=800)
-
-
+Figs[[4]]<-  function(MSEobj_Eval,dat,dat_ind,options=list())post_marg_plot(MSEobj_Eval,dat,dat_ind,options=list())
+Fig_dim[[4]] <- function(dims)list(height=800,width=800)
 
 Evaluation<-list(Tabs=Tabs, Figs=Figs, Tab_title=Tab_title, Tab_text=Tab_text, Fig_title=Fig_title, 
                  Fig_text=Fig_text, Fig_dim=Fig_dim, Intro_title=Intro_title, Intro_text=Intro_text, options=options)
 
-
-# --- Figures ---
-
-
-Fig_title[[2]] <- "Figure 1. Biomass projected since MP adoption"
-Fig_text[[2]] <- "Projections of biomass relative to MSY levels. The blue regions represent the 90% and 50% probability intervals, the white solid line is the median and the dark blue lines are two example simulations. Grey horizontal lines denote the target and limit reference points. The bold black vertical line is the current year." 
-
-Figs[[2]]<-function(MSEobj_Eval,dat,dat_ind,options=list()) BMSYproj(MSEobj_Eval,MSEobj_Eval,options,maxcol=1)
-Fig_dim[[2]] <- function(dims)list(height=420,width=600)
-
-Fig_title[[3]] <- "Figure 2. Biomass projected since MP adoption relative to unfished SSB"
-Fig_text[[3]] <- "Projections of biomass relative to MSY levels. The blue regions represent the 90% and 50% probability intervals, the white solid line is the median and the dark blue lines are two example simulations. Grey horizontal lines denote the target and limit reference points. The bold black vertical line is the current year." 
-
-Figs[[3]]<-function(MSEobj_Eval,dat,dat_ind,options=list()) B0proj(MSEobj_Eval,MSEobj_Eval,options,maxcol=1)
-Fig_dim[[3]] <- function(dims)list(height=420,width=600)
-
-Fig_title[[4]] <- "Figure 3. Posterior predicted data"
-Fig_text[[4]] <- "Data correlation text"
-
-Figs[[4]]<-function(MSEobj_Eval,dat,dat_ind,options=list()) plotInd(MSEobj_Eval,dat,dat_ind,CC=TRUE)
-Fig_dim[[4]] <- function(dims)list(height=700,width=700)
-
-Fig_title[[5]] <- "Figure 4. MIdist"
-Fig_text[[5]] <- "MI text"
-
-Figs[[5]]<-function(MSEobj_Eval,dat,dat_ind,options=list()) plotInd(MSEobj_Eval,dat,dat_ind,CC=FALSE)
-Fig_dim[[5]] <- function(dims)list(height=550,width=550)
-
-Evaluation<-list(Tabs=Tabs, Figs=Figs, Tab_title=Tab_title, Tab_text=Tab_text, Fig_title=Fig_title, 
-                 Fig_text=Fig_text, Fig_dim=Fig_dim, Intro_title=Intro_title, Intro_text=Intro_text, options=options)
 
 
 # ========== Build ============================= 
