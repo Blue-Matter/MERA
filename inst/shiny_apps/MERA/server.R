@@ -206,7 +206,6 @@ shinyServer(function(input, output, session) {
   SessionID<-paste0(USERID,"-",strsplit(as.character(Sys.time())," ")[[1]][1],"-",strsplit(as.character(Sys.time())," ")[[1]][2])
   output$SessionID<-renderText(SessionID)
 
-  
   Copyright<-"Creative Commons"
   
   # Log stuff
@@ -333,8 +332,7 @@ shinyServer(function(input, output, session) {
 
         MSClog<-readRDS(file=filey$datapath)
         Update_Questionnaire(MSClog)
-        #Start(1)
-       
+         
       },
       error = function(e){
         AM(paste0(e,"\n"))
@@ -514,7 +512,6 @@ shinyServer(function(input, output, session) {
 
   })
 
- 
   # Session save
   output$Save_session<- downloadHandler(
 
@@ -1142,227 +1139,46 @@ shinyServer(function(input, output, session) {
     
   })
 
-  # ---- Fishery all switches -----------------
-
-  observeEvent(input$All_M,
-     #if(input$All_M == 0 | input$All_M%%2 == 0){
-       updateCheckboxGroupInput(session,"M",choices=M_list,selected=M_list)
-     #}else{
-      # updateCheckboxGroupInput(session,"M",choices=M_list)
-     #}
-  )
-  observeEvent(input$All_D,
-     #if(input$All_D == 0 | input$All_D%%2 == 0){
-        updateCheckboxGroupInput(session,"D",choices=D_list,selected=D_list)
-     #}else{
-      #  updateCheckboxGroupInput(session,"D",choices=D_list)
-     #}
-  )
-  observeEvent(input$All_h,
-     #if(input$All_h == 0 | input$All_h%%2 == 0){
-        updateCheckboxGroupInput(session,"h",choices=h_list,selected=h_list)
-     #}else{
-       # updateCheckboxGroupInput(session,"h",choices=h_list)
-     #}
-  )
-  observeEvent(input$All_FP,
-     #if(input$All_FP == 0 | input$All_FP%%2 == 0){
-       {updateCheckboxGroupInput(session,"FP",choices=FP_list,selected=FP_list)
-       updateSliderInput(session,"loc",value=1)
-       updateSliderInput(session,"stmag",value=1)}
-
-     #}else{
-      # updateCheckboxGroupInput(session,"FP",choices=FP_list)
-      # updateSliderInput(session,"loc",value=1)
-      # updateSliderInput(session,"stmag",value=1)
-
-     #}
-  )
-  observeEvent(input$All_F,
-     #if(input$All_F == 0 | input$All_F%%2 == 0){
-        updateCheckboxGroupInput(session,"F",choices=F_list,selected=F_list)
-     #}else{
-      #  updateCheckboxGroupInput(session,"F",choices=F_list)
-     #}
-  )
-  observeEvent(input$All_qh,
-     #if(input$All_qh == 0 | input$All_qh%%2 == 0){
-       updateCheckboxGroupInput(session,"qh",choices=q_list,selected=q_list)
-     #}else{
-    #   updateCheckboxGroupInput(session,"qh",choices=q_list)
-     #}
-  )
-  observeEvent(input$All_q,
-     #if(input$All_q == 0 | input$All_q%%2 == 0){
-       updateCheckboxGroupInput(session,"q",choices=q_list,selected=q_list)
-     #}else{
-    #   updateCheckboxGroupInput(session,"q",choices=q_list)
-     #}
-  )
-  observeEvent(input$All_LM,
-     #if(input$All_LM == 0 | input$All_LM%%2 == 0){
-       updateCheckboxGroupInput(session,"LM",choices=LM_list,selected=LM_list)
-     #}else{
-    #   updateCheckboxGroupInput(session,"LM",choices=LM_list)
-     #}
-  )
-  observeEvent(input$All_sel,
-     #if(input$All_sel == 0 | input$All_sel%%2 == 0){
-        updateCheckboxGroupInput(session,"sel",choices=sel_list,selected=sel_list)
-     #}else{
-    #    updateCheckboxGroupInput(session,"sel",choices=sel_list)
-     #}
-  )
-  observeEvent(input$All_dome,
-     #if(input$All_dome == 0 | input$All_dome%%2 == 0){
-        updateCheckboxGroupInput(session,"dome",choices=dome_list,selected=dome_list)
-     #}else{
-    #    updateCheckboxGroupInput(session,"dome",choices=dome_list)
-    #}
-  )
-  observeEvent(input$All_DR,
-     #if(input$All_DR == 0 | input$All_DR%%2 == 0){
-        updateCheckboxGroupInput(session,"DR",choices=DR_list,selected=DR_list)
-     #}else{
-    #    updateCheckboxGroupInput(session,"DR",choices=DR_list)
-     #}
-  )
-  observeEvent(input$All_PRM,
-    #if(input$All_PRM == 0 | input$All_PRM%%2 == 0){
-        updateCheckboxGroupInput(session,"PRM",choices=PRM_list,selected=PRM_list)
-    #}else{
-    #    updateCheckboxGroupInput(session,"PRM",choices=PRM_list)
-    #}
-  )
-  observeEvent(input$All_sigR,
-     #if(input$All_sigR == 0 | input$All_sigR%%2 == 0){
-        updateCheckboxGroupInput(session,"sigR",choices=sigR_list,selected=sigR_list)
-     #}else{
-    #    updateCheckboxGroupInput(session,"sigR",choices=sigR_list)
-    # }
-  )
-
-  observeEvent(input$All_Ah,
-     #if(input$All_Ah  == 0 | input$All_Ah%%2 == 0){
-       updateCheckboxGroupInput(session,"Ah",choices=Ah_list,selected=Ah_list[[1]]) # I know this duplication is...
-     #}else{
-    #   updateCheckboxGroupInput(session,"Ah",choices=Ah_list,selected=Ah_list[[1]]) # ... lazy but I'm keeping it here for future toggle adaptation.
-     #}
-  )
-  observeEvent(input$All_Vh,
-     #if(input$All_Vh  == 0 | input$All_Vh%%2 == 0){
-       updateCheckboxGroupInput(session,"Vh",choices=Vh_list,selected=Vh_list[[length(Vh_list)]]) # I know this duplication is...
-     #}else{
-      # updateCheckboxGroupInput(session,"Vh",choices=Vh_list,selected=Vh_list[[length(Vh_list)]]) # ... lazy but I'm keeping it here for future toggle adaptation.
-     #}
+  # ---- Fishery all toggles -----------------
+  
+  observeEvent(input$All_M,  updateCheckboxGroupInput(session,"M",choices=M_list,selected=M_list))
+  observeEvent(input$All_D,  updateCheckboxGroupInput(session,"D",choices=D_list,selected=D_list))
+  observeEvent(input$All_h,  updateCheckboxGroupInput(session,"h",choices=h_list,selected=h_list))
+  observeEvent(input$All_F, updateCheckboxGroupInput(session,"F",choices=F_list,selected=F_list))
+  observeEvent(input$All_qh, updateCheckboxGroupInput(session,"qh",choices=q_list,selected=q_list))
+  observeEvent(input$All_q,  updateCheckboxGroupInput(session,"q",choices=q_list,selected=q_list))
+  observeEvent(input$All_LM, updateCheckboxGroupInput(session,"LM",choices=LM_list,selected=LM_list))
+  observeEvent(input$All_sel,updateCheckboxGroupInput(session,"sel",choices=sel_list,selected=sel_list))
+  observeEvent(input$All_dome, updateCheckboxGroupInput(session,"dome",choices=dome_list,selected=dome_list))
+  observeEvent(input$All_DR, updateCheckboxGroupInput(session,"DR",choices=DR_list,selected=DR_list))
+  observeEvent(input$All_PRM, updateCheckboxGroupInput(session,"PRM",choices=PRM_list,selected=PRM_list))
+  observeEvent(input$All_sigR, updateCheckboxGroupInput(session,"sigR",choices=sigR_list,selected=sigR_list))
+  observeEvent(input$All_Ah, updateCheckboxGroupInput(session,"Ah",choices=Ah_list,selected=Ah_list[[1]]))
+  observeEvent(input$All_Vh, updateCheckboxGroupInput(session,"Vh",choices=Vh_list,selected=Vh_list[[length(Vh_list)]]))
+  observeEvent(input$All_A, updateCheckboxGroupInput(session,"A",choices=A_list,selected=input$Ah))
+  observeEvent(input$All_V, updateCheckboxGroupInput(session,"V",choices=V_list,selected=input$Vh))
+  observeEvent(input$All_Dh,
+               if(input$All_Dh == 0 | input$All_Dh%%2 == 0){
+                 updateCheckboxGroupInput(session,"Dh",choices=Dh_list,selected=Dh_list[[5]])
+               }else{
+                 updateCheckboxGroupInput(session,"Dh",choices=Dh_list,selected=Dh_list[[5]])
+               }
   )
   
-  observeEvent(input$All_A,
-    #if(input$All_A  == 0 | input$All_A%%2 == 0){
-       updateCheckboxGroupInput(session,"A",choices=A_list,selected=input$Ah) # I know this duplication is...
-    #}else{
-    #  updateCheckboxGroupInput(session,"A",choices=A_list,selected=input$Ah)  # ... lazy but I'm keeping it here for future toggle adaptation. 
-    #} 
-  )
-  observeEvent(input$All_V,
-    #if(input$All_V  == 0 | input$All_V%%2 == 0){
-       updateCheckboxGroupInput(session,"V",choices=V_list,selected=input$Vh) # I know this duplication is...
-    #}else{
-    #   updateCheckboxGroupInput(session,"V",choices=V_list,selected=input$Vh) # ... lazy but I'm keeping it here for future toggle adaptation. 
-    #}
-  )
-  observeEvent(input$All_Dh,
-    if(input$All_Dh == 0 | input$All_Dh%%2 == 0){
-      updateCheckboxGroupInput(session,"Dh",choices=Dh_list,selected=Dh_list[[5]])
-    }else{
-      updateCheckboxGroupInput(session,"Dh",choices=Dh_list,selected=Dh_list[[5]])
-    }
-  )
-
-  # ---- Management all switches -------------
-
-  observeEvent(input$All_M1,
-               #if(input$All_M1 == 0 | input$All_M1%%2 == 0){
-                 updateCheckboxGroupInput(session,"M1",choices=M1_list,selected=M1_list)
-              # }else{
-               #  updateCheckboxGroupInput(session,"M1",choices=M1_list)
-               #}
-  )
-  observeEvent(input$All_IB,
-               #if(input$All_IB == 0 | input$All_IB%%2 == 0){
-                 updateCheckboxGroupInput(session,"IB",choices=IB_list,selected=IB_list)
-               #}else{
-              #   updateCheckboxGroupInput(session,"IB",choices=IB_list)
-              # }
-  )
-  observeEvent(input$All_IV,
-               #if(input$All_IV == 0 | input$All_IV%%2 == 0){
-                 updateCheckboxGroupInput(session,"IV",choices=IV_list,selected=IV_list)
-               #}else{
-                # updateCheckboxGroupInput(session,"IV",choices=IV_list)
-               #}
-  )
-
-  observeEvent(input$All_IBE,
-               #if(input$All_IBE == 0 | input$All_IBE%%2 == 0){
-                 #vals<-as.list(IB_list[input$IB])
-                 updateCheckboxGroupInput(session,"IBE",choices=IBE_list,selected=input$IB)
-               #}else{
-              #   updateCheckboxGroupInput(session,"IBE",choices=IBE_list,selected=input$IB)
-               #}
-  )
-  observeEvent(input$All_IVE,
-               #if(input$All_IVE == 0 | input$All_IVE%%2 == 0){
-                 updateCheckboxGroupInput(session,"IVE",choices=IVE_list,selected=input$IV)
-               #}else{
-                # updateCheckboxGroupInput(session,"IVE",choices=IVE_list,selected=input$IV)
-               #}
-  )
-  observeEvent(input$All_IBSL,
-               #if(input$All_IBSL == 0 | input$All_IBSL%%2 == 0){
-                 updateCheckboxGroupInput(session,"IBSL",choices=IBSL_list,selected=IBSL_list[length(IB_list)-match(input$IB,IB_list)+1])
-               #}else{
-               #  updateCheckboxGroupInput(session,"IBSL",choices=IBSL_list,selected=IBSL_list[length(IB_list)-match(input$IB,IB_list)+1])
-               #}
-  )
-  observeEvent(input$All_IVSL,
-               #if(input$All_IVSL == 0 | input$All_IVSL%%2 == 0){
-                 updateCheckboxGroupInput(session,"IVSL",choices=IVSL_list,selected=input$IV)
-               #}else{
-                # updateCheckboxGroupInput(session,"IVSL",choices=IVSL_list,selected=input$IV)
-               #}
-  )
-
-
-
-  # ---- Data all switches -------------
-
-  observeEvent(input$All_D1,
-               #if(input$All_D1 == 0 | input$All_D1%%2 == 0){
-                 updateCheckboxGroupInput(session,"D1",choices=D1_list,selected=D1_list)
-               #}else{
-              #   updateCheckboxGroupInput(session,"D1",choices=D1_list)
-               #}
-  )
-  observeEvent(input$All_CB,
-               #if(input$All_CB == 0 | input$All_CB%%2 == 0){
-                 updateCheckboxGroupInput(session,"CB",choices=CB_list,selected=CB_list)
-               #}else{
-              #   updateCheckboxGroupInput(session,"CB",choices=CB_list)
-               #}
-  )
-  observeEvent(input$All_Beta,
-               #if(input$All_Beta == 0 | input$All_Beta%%2 == 0){
-                 updateCheckboxGroupInput(session,"Beta",choices=Beta_list,selected=Beta_list)
-               #}else{
-              #   updateCheckboxGroupInput(session,"Beta",choices=Beta_list)
-               #}
-  )
-  observeEvent(input$All_Err,
-
-              updateRadioButtons(session,"Err",choices=Err_list,selected="Err_bad")
-
-  )
+  # ---- Management all toggles -------------
+  observeEvent(input$All_M1, updateCheckboxGroupInput(session,"M1",choices=M1_list,selected=M1_list))
+  observeEvent(input$All_IB, updateCheckboxGroupInput(session,"IB",choices=IB_list,selected=IB_list))
+  observeEvent(input$All_IV, updateCheckboxGroupInput(session,"IV",choices=IV_list,selected=IV_list))
+  observeEvent(input$All_IBE, updateCheckboxGroupInput(session,"IBE",choices=IBE_list,selected=input$IB))
+  observeEvent(input$All_IVE, updateCheckboxGroupInput(session,"IVE",choices=IVE_list,selected=input$IV))
+  observeEvent(input$All_IBSL, updateCheckboxGroupInput(session,"IBSL",choices=IBSL_list,selected=IBSL_list[length(IB_list)-match(input$IB,IB_list)+1]))
+  observeEvent(input$All_IVSL, updateCheckboxGroupInput(session,"IVSL",choices=IVSL_list,selected=input$IV))
+  
+  # ---- Data all toggles -------------
+  observeEvent(input$All_D1, updateCheckboxGroupInput(session,"D1",choices=D1_list,selected=D1_list))
+  observeEvent(input$All_CB, updateCheckboxGroupInput(session,"CB",choices=CB_list,selected=CB_list))
+  observeEvent(input$All_Beta, updateCheckboxGroupInput(session,"Beta",choices=Beta_list,selected=Beta_list))
+  observeEvent(input$All_Err, updateRadioButtons(session,"Err",choices=Err_list,selected="Err_bad"))
   
   
   # ---- Sliders ----------------------

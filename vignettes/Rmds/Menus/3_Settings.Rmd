@@ -36,6 +36,8 @@ Figure `r paste(SecInd,FigInd,sep=".")`. The Settings dropdown menu.
 
 The DLMtool operating model allows for calculation of age-based dynamics using a so-called 'plus group' where numbers of fish aggregate in the oldest age class. This is computationally efficient but relies on age-based dynamics that are asymptotic at the plus group and older ages. The user can specify a maximum for the plus group in the Setting menu. MERA will override this if the plus group is higher than the age at 10% unfished survival.  
 
+Use seed: even though MERA uses stochastic simulation, the sampling of random variables in MERA are linked to a particular random seed and therefore exactly reproducible among users with the same input files. Alternative random seed values can be used to check stability in results or overcoming occasional sampling of problematic values. 
+
 ### Sampling of operating model parameters
 
 MERA questions have answers that provide upper and lower bounds for operating model parameters. The user can select how these bounds are used to sample the parameters. The default is a truncated normal distribution with a 95% interquartile range (the lower bound is the 2.5th percentile of the distribution, the upper bound the 97.5th percentile). The user can change the width of the interquartile range or opt for a simple uniform range. 
@@ -44,7 +46,11 @@ MERA questions have answers that provide upper and lower bounds for operating mo
 
 When MPs are evaluated in closed loop, they are used to provide new managment advice either every year or over a longer interval. The user can specify that interval here. 
 
-Operating models include a number of simulations which are individual realizations of the fishery system. The more simulations that are specified the longer it will take to performance calculations of MERA. However larger numbers of simulations provide more stable estimates of MP perfomrance and stock status. Typically 24 simulations are enough for a demonstration MSE, 96 are likely to rank MP performance reliably and 196 are required to get stable estimates of absolute MP performance. 
+Operating models include a number of simulations which are individual realizations of the fishery system. The more simulations that are specified the longer it will take to performance calculations of MERA. However larger numbers of simulations provide more stable estimates of MP perfomrance and stock status. Typically 48 simulations are enough for a demonstration MSE, 96 are likely to rank MP performance reliably and 196 are required to get very precise estimates of absolute MP performance. 
+
+Parallel comp: the user can opt to use parallel processing which can greatly shorten the time taken to conduct MERA calculations but also prevents meaningful use of the in-app progress bars (which will go from zero - 100% when parallel comp is used).
+
+Make Operating Model: at any time the user can rebuild the operating model given the MERA questionnaire, data provided and the settings in the Settings dropdown menu. All analyses will then use this new operating model. 
 
 ### Rebuilding MSE
 
@@ -52,13 +58,27 @@ In addition to the operating model described by the Questionnaire (and optionall
 
 ### Operating model conditioning / Status Determination approach (fitting to data)
 
+Use conditioned OM for analyses: by default, if a data file is loaded, then an operating model is conditioned using as much data as possible. In this section the user can opt to use an operating model generated from just the questionnaire or alternatively choose to condition using fewer data. 
+
 If, alongside the MERA questionnaire, a user uploads fishery data (Data question 1), then an operating model is fitted using all of the data that were made available which could include any combination of: 
 
-* C - Annual Catch data (complete)
+* C - Annual Catch data (can be patchy if effort is complete)
+* E - Annual Effort data (if used, must be complete or the complete series will be taken from the sketch in MERA Fishery Question 5)
 * I - Annual relative abundance index data (can be patchy)
 * M - Annual mean length data (can be patchy)
 * L - Annual Length composition data (can be patchy)
 * A - Annual Age composition data (can be patchy)
 
-By default, if a data file is loaded, then an operating model is conditioned using as much data as possible. In this section the user can opt to use an operating model generated from just the questionnaire or alternatively choose to condition using fewer data. 
+Note that if an effort conditioning approach is used in conjunction with catch data, the model will attempt to fit the catch data, essentially employing a catch per unit effort index based approach I = C/E. If only one year of catch data are provided this will add scale to the model. If only effort data are used and no catches are selected, the model will be scale-less and estimate unfished recruitment equal to 1. For more information on the Rapid Conditioning Model (RCM) used in MERA see the SAMtool (www.github.com/blue-matter/SAMtool) R package manual or load the package and use the commandline help in R (?RCM). 
+
+Estimate Annual fishing mortality rates: where the conditioning model does not include effort 'E', the model defaults to a stock reduction analysis formulation that solves the Baranov equation in each time step - which means that catches are removed exactly and annual apical F parameters do not need to be estimated. If the user has issues with applying the SRA approach they can opt to estimate the annual apical F parameters and accept observation error in the catches by checking this box.
+
+Assume initial equilibrium catches in conditioning: the user may wish to specify a level of constant annual catch prior to the first model conditioning year. This allows the model to initialize in a state substantially different from 'unfished'. 
+
+Maximum No. Ind. Comp: the user can specify the maximum  effective sample size of any annual catch at age (A) or catch at length (L) data used in conditioning. A value of 100 means that three years with total sample size of 50, 120 and 75 would then be 50, 100 and 75. Setting this to a very high number essentially removes this as a feature. 
+
+Composition nLL multipler: the user can alter the general weighting of the catch-at-age and catch-at-length composition data. For example the user could set this to 0.1 which would make the effective sample size 1/10th that reported. The same three years of composition data with reported sample sizes of 50, 120 and 75 would then be 5, 12, and 7.5.
+
+Maximum apical F: the user can constrain the maximum exploitation rate of the most vulnerable age / length class in each conditioning year. A value of 3 corresponds to a maximum harvest rate of 95% of vulnerable biomass in the most vulnerable age/length class. 
+
 

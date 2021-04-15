@@ -64,16 +64,16 @@ BMSYproj<-function(MSEobj,MSEobj_reb,options=list(),maxcol=5,qcol=rgb(0.4,0.8,0.
   nr<-ceiling(nMPs/nc)
   par(mfrow=c(nr,nc),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
   
-  B_BMSY<-MSEobj@B_BMSY
-  Blims <- c(0,quantile(B_BMSY,0.95))
+  SB_SBMSY<-MSEobj@SB_SBMSY
+  Blims <- c(0,quantile(SB_SBMSY,0.95))
   
   for(i in 1:nMPs){
     plot(range(yrs),Blims,col="white")
-    plotquant(B_BMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
+    plotquant(SB_SBMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
     mtext(MSEobj@MPs[i],3,line=0.2,font=2,col=MPcols[i])
     
     if(i==1){
-      Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0#MSEobj_reb@B_BMSY[,1,1]#
+      Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0#MSEobj_reb@SB_SBMSY[,1,1]#
       legend('topleft',legend=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" ),bty='n')
     }
     if(!is.na(vline))abline(v=yrs[vline],lwd=2)
@@ -108,7 +108,7 @@ Y_proj<-function(MSEobj,options=list(),maxcol=5,qcol=rgb(0.4,0.8,0.95), lcol= "d
   nr<-ceiling(nMPs/nc)
   #par(mfrow=c(nr,nc),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
 
-  RY<-MSEobj@C/MSEobj@OM$RefY
+  RY<-MSEobj@Catch/MSEobj@OM$RefY
   Blims <- c(0,quantile(RY,0.95))
 
   for(i in 1:nMPs){
@@ -290,8 +290,8 @@ Y50<-function (MSEobj = NULL, Ref = 0.5, Yrs = -50)
                             ")")
 
 
-  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@C[, , Yrs[1]:Yrs[2]]))
-  PMobj@Stat <- MSEobj@C[, , Yrs[1]:Yrs[2]]/RefYd
+  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@Catch[, , Yrs[1]:Yrs[2]]))
+  PMobj@Stat <- MSEobj@Catch[, , Yrs[1]:Yrs[2]]/RefYd
   PMobj@Ref <- 0.5
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
@@ -331,12 +331,12 @@ class(Y50)<-'PM'
     ind<-1+(0:1000*options$res)
     ind<-ind[ind<=proyears]
 
-    LRP<-round(apply(MSEobj@B_BMSY>0.5,2:3,mean)*100,rnd)[,ind]
+    LRP<-round(apply(MSEobj@SB_SBMSY>0.5,2:3,mean)*100,rnd)[,ind]
     Tab1<-as.data.frame(cbind(c("Current effort", "Current catches", "FMSY fishing", "Zero fishing"),LRP),stringsAsFactors = F)
     for(i in 2:ncol(Tab1))Tab1[,i]<-as.numeric(Tab1[,i])
     colnams<-c("MP",ind+Current_Year)
     names(Tab1)<-colnams
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption,
               extensions = 'Buttons',
@@ -362,12 +362,12 @@ class(Y50)<-'PM'
     ind<-1+(0:1000*options$res)
     ind<-ind[ind<=proyears]
 
-    TRP<-round(apply(MSEobj@B_BMSY>1,2:3,mean)*100,rnd)[,ind]
+    TRP<-round(apply(MSEobj@SB_SBMSY>1,2:3,mean)*100,rnd)[,ind]
     Tab1<-as.data.frame(cbind(c("Current effort", "Current catches", "FMSY fishing", "Zero fishing"),TRP),stringsAsFactors = F)
     for(i in 2:ncol(Tab1)) Tab1[,i]<-as.numeric(Tab1[,i])
     colnams<-c("MP",ind+Current_Year)
     names(Tab1)<-colnams
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption,
               extensions = 'Buttons',

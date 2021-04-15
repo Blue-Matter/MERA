@@ -38,7 +38,6 @@ MERA includes four modes:
 
 * Management Planning
 * Management Performance
-* Risk Assessment
 * Status Determination
 
 Each is described in much greater detail below. 
@@ -46,8 +45,6 @@ Each is described in much greater detail below.
 Management Planning mode is the MERA default. This is a streamlined closed-loop simulation testing mode used to evaluate candidate management procedures. 
 
 Management Performance mode compares the data collected while an MP is in use, to the posterior data projected at the point of MP adoption. Sometimes referred to as 'exceptional circumstances' this mode is used to check that an MP is working as expected. 
-
-The Risk Assessment mode projects status-quo fishing effort and catches in order to evaluate biological outcomes given operating model specification. 
 
 Status Determination mode combines the answers of the questionnaire with a formatted data file to condition an operating model. The operating model conditioning provides an estimate of current stock status. 
 

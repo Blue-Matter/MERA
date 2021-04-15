@@ -17,6 +17,7 @@ shinyUI(
     extendShinyjs(text = js_code, functions = 'browseURL'),
     useShinyalert(),
     tags$head(
+     
       tags$style(type="text/css", ".recalculating {opacity: 1.0;}"),
       tags$style(HTML("h4 { font-size:15px;}
                       h5 { font-size:13px;}
@@ -708,8 +709,8 @@ shinyUI(
                                                                      choices = IVSL_list, selected = IVSL_list),
                                                   actionLink("All_IVSL","MATCH TAC IMPLEMENTATION")),
 
-
                                  value=2),
+                        
                         tabPanel(h4("Data",style = "color:black"),
                                  
                                  conditionalPanel(width=4,condition="output.Dpanel==undefined|output.Dpanel==0",

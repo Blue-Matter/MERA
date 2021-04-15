@@ -1,7 +1,7 @@
 ---
-title: "MERA User Guide (v6)"
-subtitle: "Method Evaluation and Risk Assessment"
-author: "T. Carruthers (UBC)"
+title: "MERA User Guide"
+subtitle: "Method Evaluation and Risk Assessment (v1.0)"
+author: "T. Carruthers (Blue Matter Science)"
 date: "`r Sys.Date()`"
 output: 
   html_document:
@@ -18,7 +18,7 @@ output:
 knitr::opts_chunk$set(echo = TRUE)
 
 library('corpcor')
-library('DLMtool')
+library('MSEtool')
 library('dplyr')
 library('formattable')
 library('kableExtra')
@@ -26,7 +26,7 @@ library('knitr')
 library('shiny')
 library('shinyjs')
 library('shinyalert')
-library('MSEtool')
+library('DLMtool')
 library('tinytex')
 library('DT')
 library('rmarkdown')
@@ -39,20 +39,18 @@ source("./R/global4UG.R") # sources the list objects for the various questions
 source("./R/Q_setup.R")
 source("../inst/shiny_apps/MERA/Source/AI/AI_results.r")
 
-load("./dat/MSEobj")
-MSEobj2<-readRDS("./dat/MSEobj_2.Rdata")
-MSClog<-readRDS("./dat/MSClog.mera")
+Sesh<-readRDS("./dat/Tiger_flathead.merasession")
+MSEobj<-MSEobj2<-Sesh$MSEobj #load("./dat/MSEobj") #MSEobj2<-readRDS("./dat/MSEobj_2.Rdata") 
+MSClog<-Sesh$MSClog #readRDS("./dat/MSClog.mera")
 PanelState<-MSClog[[1]]
-load("./dat/MSEobj_reb")
-#load("./dat/MSEobj_reb2")
-MSEobj_reb2<-readRDS("./dat/MSEobj_reb_2.Rdata")
+MSEobj_reb<-MSEobj_reb2<-Sesh$MSEobj_reb #load("./dat/MSEobj_reb")
 MSEobj_Eval<-MSEobj2
-eff_values<-readRDS("./dat/eff_values.rda")
+eff_values<-MSClog$eff_values#   readRDS("./dat/eff_values.rda")
 Syear=eff_values$df$x[1]
 Lyear=eff_values$df$x[nrow(eff_values$df)]
 input<-c(input,list(Syear=Syear,Lyear=Lyear))
-dat<-readRDS("./dat/dat.rda")
-dat_ind<-readRDS("./dat/dat_ind.rda")
+dat<-MSClog$dat #  readRDS("./dat/dat.rda")
+dat_ind<-MSClog$dat_ind #readRDS("./dat/dat_ind.rda")
 FT<-FeaseLabs(MPs=MSEobj2@MPs) # uses panel state
 MPcols<-FT$MPcols  # needed for planning color coding
 
@@ -100,7 +98,6 @@ rmd.files <- c("Rmds/Introductory/Intro_M.Rmd",
                "Rmds/Qs/Qs_M.Rmd",
                "Rmds/Management_Planning/Management_Planning_M.Rmd",
                "Rmds/Management_Performance/Management_Performance_M.Rmd",
-               "Rmds/Risk_Assessment/Risk_Assessment_M.Rmd",
                "Rmds/Status_Determination/Status_Determination_M.Rmd",
                "Rmds/Data/Data_M.Rmd",
                "Rmds/Support/Support_M.Rmd",

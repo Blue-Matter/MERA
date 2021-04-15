@@ -20,3 +20,8 @@ output:
 
 Many thanks for the ongoing support of the Natural Resources Defense Council, and in particular DLMtool team members David Newman and Lisa Suatoni who have provided input at every stage. The development of DLMtool has been funded by the Gordon and Betty Moore Foundation, the Packard Foundation, Fisheries and Oceans Canada, the Walton Foundation, Resources Legacy Fund, the Natural Resources Defense Council, the United Nations Food and Agricultural Organization and the California Department of Fish and Wildlife. 
 
+## Blue Matter Science
+
+<img src="./Images/BMlogo.jpg" width="150">
+
+The openMSE framework and the MERA App were coded by Blue Matter Science Ltd (www.bluematterscience.com). 

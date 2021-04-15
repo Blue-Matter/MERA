@@ -25,7 +25,7 @@ Fisheries management systems typically involve an ongoing cycle of harvest, data
 
 For example, managers must apportion budgets among various species and competing programs such as data-collection, scientific research, resource assessment and enforcement. Managers must select an appropriate time interval for renewing management advice and the correct level of model complexity for assessing a stock. They must also select among many ways to interpret stock assessment outputs in terms of management advice (i.e. a harvest control rule). Additionally managers may be expected to guide their science program in the direction of the most critical uncertainties in the system that are most in need of research. 
 
-Given that it generally involves the use of public money in the stewardship of public resources it is problematic that even in developed fishery management systems, decision making is often ad-hoc, lacking both transparency in the basis for decisions such as those listed above, and a coherent overall strategy (but see IWC, other exceptions in Australian / South African fisheries REFS).
+Given that it generally involves the use of public money in the stewardship of public resources it is problematic that even in developed fishery management systems, decision making is often ad-hoc, lacking both transparency in the basis for decisions such as those listed above, and a coherent overall strategy (but see IWC, other exceptions in Australian / South African fisheries where management strategy evaluation has been more prevalent, Punt et al. 2016).
 
 ### Options for informing strategic management
 
@@ -39,7 +39,7 @@ While there have been criticisms of operational modelling (Rochet and Rice 2009,
 
 ### Contemporary approaches for informing fisheries management
 
-In the absence of rigorous operational modelling, fisheries resource management has often relied on subjective, qualitative frameworks for guidance. A large number of such frameworks exist that aim to evaluate biological risks (Productivity Susceptibility Analysis, PSA: Hobday 2007), stock status (Rapfish; Pitcher 1999), select management options (FISHE: EDF 2019) and prioritize management issues (Fletcher 2005). Such systems have been used widely. For example, PSA has been used in the eco-certification of global fish stocks (Seafoodwatch 2016) and satisfied legal requirements for ecosystem-based fishery management (Hobday et al. 2011). 
+In the absence of rigorous processes to establish operating models, fisheries resource management has often relied on subjective, qualitative frameworks for guidance. A large number of such frameworks exist that aim to evaluate biological risks (Productivity Susceptibility Analysis, PSA: Hobday 2007), stock status (Rapfish; Pitcher 1999), select management options (FISHE: EDF 2019) and prioritize management issues (Fletcher 2005). Such systems have been used widely. For example, PSA has been used in the eco-certification of global fish stocks (Seafoodwatch 2016) and satisfied legal requirements for ecosystem-based fishery management (Hobday et al. 2011). 
 
 Since they simply formalize expert judgement into a scoring system that accepts subjective inputs, it is hard to objectively evaluate both the validity of their assumptions and the quality of advice that they provide. When such systems have been codified and subject to theoretical testing their performance was found to be poor (e.g. biological risk assessment using PSA, Hordyk and Carruthers 2018). 
 

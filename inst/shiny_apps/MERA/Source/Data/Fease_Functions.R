@@ -42,7 +42,7 @@ Fease2 <- function(Data=NULL, TAC=TRUE, TAE=TRUE, SL=TRUE, Spatial=TRUE, names.o
 MPtype2 <- function(MPs=NA) {
   if (any(is.na(MPs))) MPs <- avail("MP")
 
-  Data <- DLMtool::SimulatedData
+  Data <- MSEtool::SimulatedData
 
   runMPs <- applyMP(Data, MPs, reps = 2, nsims=1, silent=TRUE)
   recs <- runMPs[[1]]

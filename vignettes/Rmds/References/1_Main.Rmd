@@ -21,6 +21,8 @@ Anon. 2018. Report of the 2018 joint tuna RFMO management strategy evaluation wo
 
 Butterworth, D. S., & Punt, A. E. 1999. Experiences in the evaluation and implementation of management procedures. ICES Journal of Marine Science, 56(6), 985–998. https://doi.org/10.1006/jmsc.1999.0532
 
+Carruthers, T.R. & Hordyk, A.R. 2018. The Data-Limited Methods Toolkit (DLMtool): An R package for informing management of data-limited populations. Methods in Ecology and Evolution. https://doi.org/10.1111/2041-210X.13081
+
 EDF. 2019. FISHE: Framework for Integrated Stock and Habitat Evaluation. Environmental Defense Fund. Available at: http://fishe.edf.org/ [accessed June 2019]
 
 Fletcher WJ. The application of qualitative risk assessment methodology to prioritize issues for fisheries management. ICES J Mar Sci. 2005;62(8):1576–87.
@@ -31,11 +33,15 @@ Hobday AJ, Smith ADM, Stobutzki IC, Bulman C, Daley R, Dambacher JM, et al. 2011
 
 Holling, C.S. 1978. Adaptive Environmental Assessment and Management. John Wiley and Sons, Chichester, UK.
 
+Hordyk, A., Huynh, Q., Carruthers, T. 2021. MSEtool: Management Strategy Evaluation toolkit. R Package available on GitHub repository: www.github.com/blue-matter/MSEtool
+
+Huynh, Q., Hordyk, A., Carruthers, T. 2021. SAMtool: stock assessment methods toolkit. R Package available on GitHub repository: www.github.com/blue-matter/SAMtool
+
 Kronlund, A.R., Holt, K.R., Cleary, J.S., Shelton, P.A. 2013. Current approaches for the provision of scientific advice on the precautionary approach for Canadian fish stocks: Sections 8 – Management Strategy Evaluation. Canadian Science Advisory Secretariat. Research Document - 2013/081. Available at: http://www.dfo-mpo.gc.ca/csas-sccs/publications/resdocs-docrech/2013/2013_081-eng.html [accessed July 2019]
 
 CDFW. 2018. Master plan for fisheries: a guide for implementation of the Marine Life Management Act. California Department of Fish & Wildlife. Available from: https://nrm.dfg.ca.gov/FileHandler.ashx?DocumentID=159222&inline [accessed July 2019]
 
-MERA. 2019. Version XXX. Available at: MERA.netlify.xxx [accessed July 2019]
+MERA. 2019. Version 1.0.1. Available at: www.MERAfish.org [accessed Jan 2021]
 
 NOAA. 2019. Integrated Ecosystem Assessment, U.S. National Oceanic and Atmospheric Administration. Available at: https://www.integratedecosystemassessment.noaa.gov/publications [accessed June 2019]
 

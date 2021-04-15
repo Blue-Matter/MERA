@@ -26,16 +26,16 @@ BMSYproj<-function(MSEobj,MSEobj_reb,options=list(),maxcol=5,qcol=rgb(0.4,0.8,0.
   nr<-ceiling(nMPs/nc)
   par(mfrow=c(nr,nc),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
   
-  B_BMSY<-MSEobj@B_BMSY
-  Blims <- c(0,quantile(B_BMSY,0.95))
+  SB_SBMSY<-MSEobj@SB_SBMSY
+  Blims <- c(0,quantile(SB_SBMSY,0.95))
 
   for(i in 1:nMPs){
     plot(range(yrs),Blims,col="white",yaxs="i")
-    plotquant(B_BMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
+    plotquant(SB_SBMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
     mtext(MSEobj@MPs[i],3,line=0.2,font=2,col=MPcols[i])
     
     if(i==1){
-      Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0#MSEobj_reb@B_BMSY[,1,1]#
+      Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0#MSEobj_reb@SB_SBMSY[,1,1]#
       legend('topleft',legend=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" ),bty='n')
     }
     if(!is.na(vline))abline(v=yrs[vline],lwd=2)
@@ -78,7 +78,7 @@ B0proj<-function(MSEobj,MSEobj_reb,options=list(),maxcol=5,qcol=rgb(0.4,0.8,0.95
     mtext(MSEobj@MPs[i],3,line=0.2,font=2,col=MPcols[i])
     
     if(i==1){
-      Bdeps<-MSEobj@OM$D#MSEobj_reb@B_BMSY[,1,1]#
+      Bdeps<-MSEobj@OM$D#MSEobj_reb@SB_SBMSY[,1,1]#
       legend('topleft',legend=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% unfished SSB" ),bty='n')
     }
     if(!is.na(vline))abline(v=yrs[vline],lwd=2)
@@ -127,20 +127,20 @@ LT_HCR<-function(MSEobj, MSEobj_reb,options=list(),maxcol=6,qcol=rgb(0.4,0.8,0.9
   
   par(mfrow=c(nr,nc),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
   
-  B_BMSY<-MSEobj_reb@B_BMSY
-  B_B0<-MSEobj_reb@B_BMSY*MSEobj_reb@OM$SSBMSY_SSB0 #<-MSEobj_reb@C/ array(rep(MSEobj_reb@C[,,1],MSEobj_reb@proyears),dim(MSEobj_reb@C))#MSEobj_reb@OM$RefY
+  SB_SBMSY<-MSEobj_reb@SB_SBMSY
+  B_B0<-MSEobj_reb@SB_SBMSY*MSEobj_reb@OM$SSBMSY_SSB0 #<-MSEobj_reb@C/ array(rep(MSEobj_reb@C[,,1],MSEobj_reb@proyears),dim(MSEobj_reb@C))#MSEobj_reb@OM$RefY
   
-  Blims <- c(0,quantile(B_BMSY,0.95))
+  Blims <- c(0,quantile(SB_SBMSY,0.95))
   B2lims<- c(0,quantile(B_B0,0.95))
   
   for(i in 1:nMPs){
     
     plot(range(yrs),Blims,col="white")
-    plotquant(B_BMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
+    plotquant(SB_SBMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
     mtext(MSEobj_reb@MPs[i],3,line=0.2,font=2,col=MPcols[i])
     
     if(i==1){
-      Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0#MSEobj_reb@B_BMSY[,1,1]#
+      Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0#MSEobj_reb@SB_SBMSY[,1,1]#
       legend('topleft',legend=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" ),bty='n')
     }
     
@@ -175,10 +175,10 @@ ST_HCR<-function(MSEobj, MSEobj_reb,options=list(),maxcol=6,qcol=rgb(0.4,0.8,0.9
   
   par(mfrow=c(nr,nc),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
   
-  B_BMSY<-MSEobj_reb@B_BMSY[,,1:20,drop=F]
-  B_B0<-MSEobj_reb@B_BMSY*MSEobj_reb@OM$SSBMSY_SSB0#<-MSEobj_reb@C/ array(rep(MSEobj_reb@C[,,1],MSEobj_reb@proyears),dim(MSEobj_reb@C))#MSEobj_reb@OM$RefY
+  SB_SBMSY<-MSEobj_reb@SB_SBMSY[,,1:20,drop=F]
+  B_B0<-MSEobj_reb@SB_SBMSY*MSEobj_reb@OM$SSBMSY_SSB0#<-MSEobj_reb@C/ array(rep(MSEobj_reb@C[,,1],MSEobj_reb@proyears),dim(MSEobj_reb@C))#MSEobj_reb@OM$RefY
   
-  Blims <- c(0,quantile(B_BMSY,0.95))
+  Blims <- c(0,quantile(SB_SBMSY,0.95))
  
   for(i in 1:nMPs){
     
@@ -189,11 +189,11 @@ ST_HCR<-function(MSEobj, MSEobj_reb,options=list(),maxcol=6,qcol=rgb(0.4,0.8,0.9
       #legend('bottomright',legend="Two mean generation times",text.col='grey',bty='n')
      }
     
-    plotquant(B_BMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
+    plotquant(SB_SBMSY[,i,],p=quants,yrs,qcol,lcol,ablines=c(0.5,1))
     mtext(MSEobj_reb@MPs[i],3,line=0.2,font=2,col=MPcols[i])
     
     if(i==1){
-      Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0#MSEobj_reb@B_BMSY[,1,1]#
+      Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0#MSEobj_reb@SB_SBMSY[,1,1]#
       legend('topleft',legend=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" ),bty='n')
     }
     
@@ -222,7 +222,7 @@ CCU_plot<-function(MSEobj,MSEobj_reb,options=list(),maxrow=1,maxcol=5,fease=F){
   
   MSEtemp<-MSEobj
   if(length(MSEtemp@Misc)<4)MSEtemp@Misc[[4]]<-NULL
-  MSEtemp@OM<-cbind(MSEtemp@OM,betas=MSEtemp@Obs$betas,MSEtemp@Misc[[4]])
+  MSEtemp@OM<-cbind(MSEtemp@OM,betas=MSEtemp@Obs$I_beta,MSEtemp@Misc[[4]])
   MSEtemp@OM<-MSEtemp@OM[,names(MSEtemp@OM)%in%opt1]
   VOIout<-VOI(MSEtemp,ncomp=15,nbins=6,plot=F)[[1]]
   
@@ -334,7 +334,7 @@ Yproj<-function(MSEobj,MSEobj_reb,options=list(),maxcol=5,qcol=rgb(0.4,0.8,0.95)
   nr<-ceiling(nMPs/nc)
   par(mfrow=c(nr,nc),mai=c(0.3,0.3,0.2,0.01),omi=c(0.5,0.5,0.05,0.05))
   
-  Yd<-MSEobj@C/ array(rep(MSEobj@C[,,1],MSEobj@proyears),dim(MSEobj@C))#MSEobj@OM$RefY
+  Yd<-MSEobj@Catch/ array(rep(MSEobj@Catch[,,1],MSEobj@proyears),dim(MSEobj@Catch))#MSEobj@OM$RefY
   #Yd[is.na(Yd)]<-0
   Yd[Yd==Inf]<-NA
   Yd[Yd==NaN]<-NA
@@ -398,7 +398,7 @@ PB100<-function (MSEobj = NULL, Ref = 1, Yrs = -5)
                             Yrs[1], ")")
   }
   PMobj@Ref <- Ref
-  PMobj@Stat <- MSEobj@B_BMSY[, , Yrs[2]]
+  PMobj@Stat <- MSEobj@SB_SBMSY[, , Yrs[2]]
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
   PMobj@MPs <- MSEobj@MPs
@@ -420,7 +420,7 @@ PB50<-function (MSEobj = NULL, Ref = 0.5, Yrs = -5)
                             Yrs[1], ")")
   }
   PMobj@Ref <- Ref
-  PMobj@Stat <- MSEobj@B_BMSY[, , Yrs[2]]
+  PMobj@Stat <- MSEobj@SB_SBMSY[, , Yrs[2]]
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
   PMobj@MPs <- MSEobj@MPs
@@ -443,8 +443,8 @@ LTY2<-function (MSEobj = NULL, Ref = 0.5, Yrs = -5)
     PMobj@Caption <- paste0("Prob. Yield > Ref. Yield (Years ", 
                             Yrs[1], "-", Yrs[2], ")")
   }
-  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@C[, , Yrs[1]:Yrs[2]]))
-  PMobj@Stat <- MSEobj@C[, , Yrs[1]:Yrs[2]]/RefYd
+  RefYd <- array(MSEobj@OM$RefY, dim = dim(MSEobj@Catch[, , Yrs[1]:Yrs[2]]))
+  PMobj@Stat <- MSEobj@Catch[, , Yrs[1]:Yrs[2]]/RefYd
   PMobj@Ref <- 0.5
   PMobj@Prob <- calcProb(PMobj@Stat > PMobj@Ref, MSEobj)
   PMobj@Mean <- calcMean(PMobj@Prob)
@@ -466,7 +466,7 @@ FeaseLabs<-function(MPs,dat=NA){
   nMPs<-length(MPs) 
   
   # Proper Data Feasibility based on complex fease analysis by MP
-  tempdat<-tempdat0<-DLMtool::SimulatedData
+  tempdat<-tempdat0<-MSEtool::SimulatedData
   tempdat@Cat<-array(NA,dim(tempdat0@Cat))
   tempdat@Ind<-array(NA,dim(tempdat0@Ind))
   tempdat@CAL<-array(NA,dim(tempdat0@CAL))
@@ -576,12 +576,12 @@ FeaseLabs<-function(MPs,dat=NA){
     ind<-1+(0:1000*options$res)
     ind<-ind[ind<=proyears]
     
-    LRP<-round(apply(MSEobj@B_BMSY>0.5,2:3,mean)*100,rnd)[,ind]
+    LRP<-round(apply(MSEobj@SB_SBMSY>0.5,2:3,mean)*100,rnd)[,ind]
     Tab1<-as.data.frame(cbind(c("Current effort", "Current catches", "FMSY fishing", "Zero fishing"),LRP),stringsAsFactors = F)
     for(i in 2:ncol(Tab1))Tab1[,i]<-as.numeric(Tab1[,i])
     colnams<-c("MP",ind+Current_Year)
     names(Tab1)<-colnams
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption,
               extensions = 'Buttons',
@@ -607,12 +607,12 @@ FeaseLabs<-function(MPs,dat=NA){
     ind<-1+(0:1000*options$res)
     ind<-ind[ind<=proyears]
     
-    TRP<-round(apply(MSEobj@B_BMSY>1,2:3,mean)*100,rnd)[,ind]
+    TRP<-round(apply(MSEobj@SB_SBMSY>1,2:3,mean)*100,rnd)[,ind]
     Tab1<-as.data.frame(cbind(c("Current effort", "Current catches", "FMSY fishing", "Zero fishing"),TRP),stringsAsFactors = F)
     for(i in 2:ncol(Tab1)) Tab1[,i]<-as.numeric(Tab1[,i])
     colnams<-c("MP",ind+Current_Year)
     names(Tab1)<-colnams
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption,
               extensions = 'Buttons',
@@ -669,7 +669,7 @@ FeaseLabs<-function(MPs,dat=NA){
     ind<-1+(0:1000*options$res)
     ind<-ind[ind<=min(burnin,proyears)]
     
-    LRP<-round(apply(MSEobj@B_BMSY[,,1:burnin,drop=FALSE]>0.5,2:3,mean)*100,rnd)[,ind]
+    LRP<-round(apply(MSEobj@SB_SBMSY[,,1:burnin,drop=FALSE]>0.5,2:3,mean)*100,rnd)[,ind]
     
     FT<-FeaseLabs(MPs=MSEobj@MPs,dat=NA)
     MPcols<-FT$MPcols  # just do FeaseLabs once or else this computationally costly code has to be reused
@@ -683,7 +683,7 @@ FeaseLabs<-function(MPs,dat=NA){
     MPwithurl <- !is.na(URLs) 
     Tab1$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab1$MP[MPwithurl],"</a>")
     
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption, extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
                    options=list(buttons = 
@@ -713,7 +713,7 @@ FeaseLabs<-function(MPs,dat=NA){
     ind<-1+(0:1000*options$res)
     ind<-ind[ind<=min(burnin,proyears)]
     
-    TRP<-round(apply(MSEobj@B_BMSY[,,1:burnin,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind]
+    TRP<-round(apply(MSEobj@SB_SBMSY[,,1:burnin,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind]
     FT<-FeaseLabs(MPs=MSEobj@MPs,dat=NA)
     
     Tab1<-as.data.frame(cbind(MSEobj@MPs, FT$MP_Type, FT$feasible, TRP),stringsAsFactors = F)
@@ -725,7 +725,7 @@ FeaseLabs<-function(MPs,dat=NA){
     MPwithurl <- !is.na(URLs) 
     Tab1$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab1$MP[MPwithurl],"</a>")
     
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Starting between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption, extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
               options=list(buttons = 
@@ -820,7 +820,7 @@ FeaseLabs<-function(MPs,dat=NA){
     proyears<-MSEobj_reb@proyears
     ind<-1:min(options$YIU,proyears)
     
-    LRP<-matrix(round(apply(MSEobj@B_BMSY[,,1:options$YIU,drop=FALSE]>0.5,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
+    LRP<-matrix(round(apply(MSEobj@SB_SBMSY[,,1:options$YIU,drop=FALSE]>0.5,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
     Tab1<-as.data.frame(cbind(MSEobj@MPs,LRP))
    
     colnams<-c("MP",Current_Year-((options$YIU-1):0))
@@ -832,7 +832,7 @@ FeaseLabs<-function(MPs,dat=NA){
     Tab1$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab1$MP[MPwithurl],"</a>")
     
     
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab1,caption=caption,extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
               options=list(buttons = 
@@ -858,7 +858,7 @@ FeaseLabs<-function(MPs,dat=NA){
     proyears<-MSEobj_reb@proyears
     ind<-1:min(options$YIU,proyears)
     
-    TRP<-matrix(round(apply(MSEobj@B_BMSY[,,ind,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
+    TRP<-matrix(round(apply(MSEobj@SB_SBMSY[,,ind,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
     Tab2<-as.data.frame(cbind(MSEobj@MPs,TRP))
     colnams<-c("MP",Current_Year-((options$YIU-1):0))
     names(Tab2)<-colnams
@@ -868,7 +868,7 @@ FeaseLabs<-function(MPs,dat=NA){
     MPwithurl <- !is.na(URLs) 
     Tab2$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab2$MP[MPwithurl],"</a>")
     
-    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj@OM$D/MSEobj@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab2,caption=caption, extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
                    options=list(buttons = 
@@ -904,7 +904,7 @@ FeaseLabs<-function(MPs,dat=NA){
     MPwithurl <- !is.na(URLs) 
     Tab3$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab3$MP[MPwithurl],"</a>")
     
-    Bdeps<-MSEobj_reb@OM$D#MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj_reb@OM$D#MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% of unfished SSB" )
     datatable(Tab3,caption=caption,extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
                 options=list(buttons = 
@@ -929,7 +929,7 @@ FeaseLabs<-function(MPs,dat=NA){
     nMPs<-MSEobj_reb@nMPs
     proyears<-MSEobj_reb@proyears
     ind<-proyears-(9:0)
-    TRP<-matrix(round(apply(MSEobj_reb@B_BMSY[,,ind,drop=F]>1,2:3,mean)*100,rnd),nrow=nMPs)
+    TRP<-matrix(round(apply(MSEobj_reb@SB_SBMSY[,,ind,drop=F]>1,2:3,mean)*100,rnd),nrow=nMPs)
     Tab3<-as.data.frame(cbind(MSEobj_reb@MPs,TRP))
     colnams<-c("MP",Current_Year+proyears-options$YIU-(9:0))
     names(Tab3)<-colnams
@@ -939,7 +939,7 @@ FeaseLabs<-function(MPs,dat=NA){
     MPwithurl <- !is.na(URLs) 
     Tab3$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab3$MP[MPwithurl],"</a>")
     
-    Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab3,caption=caption, extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
                 options=list(buttons = 
@@ -966,7 +966,7 @@ FeaseLabs<-function(MPs,dat=NA){
     
     MGT2<-2* MSEobj_reb@OM$MGT
     ind<-1:20
-    TRP<-matrix(round(apply(MSEobj_reb@B_BMSY[,,ind,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
+    TRP<-matrix(round(apply(MSEobj_reb@SB_SBMSY[,,ind,drop=FALSE]>1,2:3,mean)*100,rnd)[,ind],nrow=nMPs)
     
     shaderng=range(ceiling(MGT2))
     shaderng[2]<-min(20,shaderng[2])
@@ -980,7 +980,7 @@ FeaseLabs<-function(MPs,dat=NA){
     MPwithurl <- !is.na(URLs) 
     Tab4$MP[MPwithurl] <- paste0("<a href='", URLs[MPwithurl]," ' target='_blank'>", Tab4$MP[MPwithurl],"</a>")
     
-    Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0 #MSEobj_reb@B_BMSY[,1,1]#
+    Bdeps<-MSEobj_reb@OM$D/MSEobj_reb@OM$SSBMSY_SSB0 #MSEobj_reb@SB_SBMSY[,1,1]#
     caption=paste0("Simulations start between ",round(min(Bdeps)*100,0), "% and ", round(max(Bdeps)*100,0), "% BMSY" )
     datatable(Tab4,caption=caption, extensions = 'Buttons',class = 'display',rownames=FALSE,escape=FALSE,
                 options=list(buttons = 

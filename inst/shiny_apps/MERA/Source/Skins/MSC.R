@@ -92,8 +92,6 @@ B0proj<-function(MSEobj,MSEobj_reb,options=list(),maxcol=5,qcol=rgb(0.4,0.8,0.95
 }
 
 plotquant<-function(x,p=c(0.05,0.25,0.75,0.95),yrs,qcol,lcol,addline=T,ablines=NA){
-  #plot(range(yrs),Ylims,col="white")
-  
   ny<-length(yrs)
   x[x==Inf]<-NA
   qs<-apply(x,2,quantile,p=p[c(1,4)],na.rm=T,type=3)
@@ -222,7 +220,7 @@ CCU_plot<-function(MSEobj,MSEobj_reb,options=list(),maxrow=1,maxcol=3,fease=F){
               "TACFrac", "TACSD", "TAEFrac","TAESD", "SizeLimFrac","SizeLimSD","Cbias","betas","RefY")
     
     MSEtemp<-MSEobj
-    MSEtemp@OM<-cbind(MSEtemp@OM,betas=MSEtemp@Obs$betas,MSEtemp@Misc[[4]])
+    MSEtemp@OM<-cbind(MSEtemp@OM,betas=MSEtemp@Obs$I_beta,MSEtemp@Misc[[4]])
     MSEtemp@OM<-MSEtemp@OM[,names(MSEtemp@OM)%in%opt1]
     VOIout<-VOI(MSEtemp,ncomp=15,nbins=6,plot=F)[[1]]
     
@@ -277,9 +275,7 @@ VOI_plot<-function(MSEobj,MSEobj_reb,options=list(),maxcol=6,fease=F){
   Obstext<- c("Abs. biomass bias","Abs. biomass Err.","Hyperstability","BMSY_B0 bias","BMSY bias","CAA n samps","CAL n samps","Catch bias",
               "MSY bias","Catch Err.","Depletion bias","Depletion Err.","FMSY_M bias","Steepness bias", "Index Targ. bias", "Index Err.", "V.B. K bias", "Len. Mat. bias",
               "Small Sel. bias", "Large Sel. bias", "V.B. Linf bias", "M bias", "Recruit. err", "VB t0 bias")
-  
-  
-  
+ 
   MPplot<-rep(F,MSEobj@nMPs)
   
   for(i in 1:MSEobj@nMPs){
