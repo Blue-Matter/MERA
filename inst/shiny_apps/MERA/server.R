@@ -14,7 +14,7 @@ library(cowplot)
 library(shinyBS)
 library(ggplot2)
 
-options(shiny.maxRequestSize=1000*1024^2)
+options(shiny.maxRequestSize=2000*1024^2)
 
 source("./global.R")
 
