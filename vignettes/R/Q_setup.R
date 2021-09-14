@@ -1,5 +1,5 @@
 
-ny<-68
+ny<-69
 makeState<-function(x)rep(T,length(get(x)))
 
 Fpanel_names<-c("M_list","D_list","h_list","FP_list","F_list","qh_list","q_list","LM_list","sel_list","dome_list","DR_list","PRM_list","sigR_list","Ah_list","Vh_list","A_list","V_list","Dh_list")

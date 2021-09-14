@@ -21,7 +21,7 @@ source("./global.R")
 # Define server logic required to generate and plot a random distribution
 shinyServer(function(input, output, session) {
 
-  Version<<-"1.0.0"
+  Version<<-"1.0.1"
   sfStop()
   
   # -------------------------------------------------------------
@@ -96,8 +96,6 @@ shinyServer(function(input, output, session) {
   SkinNo<-reactiveVal(0) # Skin selection
   #Start<-reactiveVal(0)  # Start App?
  
-  #LHYear<<-2018          # Starting value for the global variable that divides conditioning and indicator data
-  
   output$Fpanel <- reactive({ Fpanel()})
   output$Mpanel <- reactive({ Mpanel()})
   output$Dpanel <- reactive({ Dpanel()})
@@ -255,9 +253,7 @@ shinyServer(function(input, output, session) {
 
 
   # Default simulation attributes --------------------------------------------------------------------------------
-  Nyears<<-68#input$Lyear-input$Syear+1 # 1950-2018
-  #nsim<-48
-
+  
   makeState<-function(x)rep(T,length(get(x)))
 
   Fpanel_names<-c("M_list","D_list","h_list","FP_list","F_list","qh_list","q_list","LM_list","sel_list","dome_list","DR_list","PRM_list","sigR_list","Ah_list","Vh_list","A_list","V_list","Dh_list")
@@ -1244,9 +1240,9 @@ shinyServer(function(input, output, session) {
   
   # Effort sketching
   
-  eff_values <- reactiveValues(df=data.frame(x=c(1951,1980,2018), y=c(0,0.5,0.5), series=rep(1,3)),
+  eff_values <- reactiveValues(df=data.frame(x=c(1951,1980,Lyear), y=c(0,0.5,0.5), series=rep(1,3)),
                                series=1,
-                               stack=data.frame(x=c(1951,1980,2018), y=c(0,0.5,0.5), series=rep(1,3)))
+                               stack=data.frame(x=c(1951,1980,Lyear), y=c(0,0.5,0.5), series=rep(1,3)))
   
   reset_eff_values<-function(){
     eff_values$df=data.frame(x=c(input$Syear,floor(mean(c(input$Syear,input$Lyear))),input$Lyear), y=c(0,0.5,0.5), series=rep(1,3))

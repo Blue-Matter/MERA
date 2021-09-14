@@ -108,7 +108,7 @@ plotIV <- function(){
 
       pch=19
       ny<-40
-      yrs<-2018+(1:ny)
+      yrs<-Lyear+(1:ny)
 
       maxcol<-icol
       mincol<-fcol
@@ -281,7 +281,7 @@ plotIV_E <- function(){
 
       pch=19
       ny<-40
-      yrs<-2018+(1:ny)
+      yrs<-Lyear+(1:ny)
 
       maxcol<-icol
       mincol<-fcol
@@ -452,7 +452,7 @@ plotIV_SL <- function(){
 
       pch=19
       ny<-40
-      yrs<-2018+(1:ny)
+      yrs<-Lyear+(1:ny)
 
       maxcol<-icol
       mincol<-fcol

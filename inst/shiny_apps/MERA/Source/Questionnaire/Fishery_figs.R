@@ -44,12 +44,13 @@ plotD <- function(dummy=1){
 
   cond<-D_nams%in%input$D
 
-  suppressWarnings({ny<-as.numeric(input$Lyear-input$Syear+1)})
-  if(length(ny)==0){
-    ny<-68
-  }else if(is.na(ny)){
-    ny<-68
-  }
+  #suppressWarnings({ny<-as.numeric(input$Lyear-input$Syear+1)})
+  #if(length(ny)==0){
+  #  ny<-68
+  #}else if(is.na(ny)){
+  #  ny<-68
+  #}
+  ny<-Nyears
   
   if(sum(cond)>0){
     par(mfrow=c(1,2),mai=c(0.3,0.5,0.01,0.01), omi=c(0.4,0.18,0.55,0.1),cex.main = 1.5, cex.lab=1.35 )
@@ -332,16 +333,16 @@ plotFP_old <-function(dummy=1){
   par(mfrow=c(1,1), mar=c(3.5,3,0.01,0.01), cex.main = 1.5, cex.lab=1.35 )
   FP_nams<-unlist(FP_list)#c("FP_s", "FP_gr","FP_bb","FP_gi","FP_ri","FP_rd")
 
-  suppressWarnings({ny<-as.numeric(input$Lyear-input$Syear+1)})
-  if(length(ny)==0){
-    ny<-68
-  }else if(is.na(ny)){
-    ny<-68
-  }
-  yrs<-Current_Year-(ny:1)
+  #suppressWarnings({ny<-as.numeric(input$Lyear-input$Syear+1)})
+  #if(length(ny)==0){
+  #  ny<-68
+  #}else if(is.na(ny)){
+  #  ny<-68
+  #}
+  yrs<-Current_Year-(Nyears:1)
+  ny<-Nyears
 
   trends<-array(NA,c(6,ny))
-  # par(mfrow=c(3,2),mar=rep(0.1,4))
   for(i in 1:6)trends[i,]<-Ftrendfunc(M1=M1s[i],M2=M2s[i],sd1=sd1s[i],sd2=sd2s[i],h2=h2s[i],bm=bms[i],loc=input$loc,start_mag=2-input$stmag,co=input$co,ny=ny)
   cols<-rep(c(fcol,'black','dark grey'),2)
   ltys<-rep(c(1,2),each=3)
@@ -450,8 +451,8 @@ plotqh <- function(dummy=1){
 
   if(sum(cond)>0){
 
-    yrs<-input$Syear:input$Lyear
-    ny<-length(yrs)
+    yrs<-Syear:Lyear
+    ny<-Nyears
     maxcol<-fcol2
     mincol<-icol
     q_max<-max(q_maxes[cond])
@@ -473,12 +474,12 @@ plotqh <- function(dummy=1){
     abline(h=c(hmax,hmin),col=c(maxcol,mincol),lty=2)
     vmax<-log(hmax,1+q_max/100)
     vmin<-log(hmin,1+q_min/100)
-    abline(v=2018-ny+c(vmax,vmin),col=c(maxcol,mincol),lty=2)
+    abline(v=Lyear-ny+c(vmax,vmin),col=c(maxcol,mincol),lty=2)
 
     mtext("Year",1,line=2)
     mtext(paste("Catchability relative to",min(yrs),"(q)"),2,line=2)
-    text(vmax-ny/5+2018-ny,0.03,paste(round(vmax),"years"),col=maxcol)
-    text(vmin-ny/5+2018-ny,0.24,paste(round(vmin),"years"),col=mincol)
+    text(vmax-ny/5+Lyear-ny,0.03,paste(round(vmax),"years"),col=maxcol)
+    text(vmin-ny/5+Lyear-ny,0.24,paste(round(vmin),"years"),col=mincol)
     legend('topleft',legend=c(paste("Highest = ",q_max,"%"),paste("Lowest = ",q_min,"%")),text.col=c(maxcol,mincol),bty='n',text.font=1)
 
 
@@ -508,10 +509,10 @@ plotq <- function(dummy=1){
 
     par(mfrow=c(1,1),mar=c(3.5,3,0.01,0.01), cex.main = 1.5, cex.lab=1.35 )
 
-    plot(c(0.5,ny)+2018,c(0,2.5),col="white",xlab="",ylab="")
-    polygon(2018+c(1:ny,ny:1),c(qy_max,qy_min[ny:1]),border=NA,col=fcol)
-    lines((1:ny)+2018,qy_max,col=maxcol)
-    lines((1:ny)+2018,qy_min,col=mincol)
+    plot(c(0.5,ny)+Lyear,c(0,2.5),col="white",xlab="",ylab="")
+    polygon(Lyear+c(1:ny,ny:1),c(qy_max,qy_min[ny:1]),border=NA,col=fcol)
+    lines((1:ny)+Lyear,qy_max,col=maxcol)
+    lines((1:ny)+Lyear,qy_min,col=mincol)
     hmin<-hmax<-0.5
     if(q_max>0)hmax<-2
     if(q_min>0)hmin<-2
@@ -520,12 +521,12 @@ plotq <- function(dummy=1){
     abline(h=c(hmax,hmin),col=c(maxcol,mincol),lty=2)
     vmax<-log(hmax,1+q_max/100)
     vmin<-log(hmin,1+q_min/100)
-    abline(v=2018+c(vmax,vmin),col=c(maxcol,mincol),lty=2)
+    abline(v=Lyear+c(vmax,vmin),col=c(maxcol,mincol),lty=2)
 
     mtext("Year",1,line=2)
     mtext("Catchability relative to today (q)",2,line=2)
-    text(vmax-10+2018,0.03,paste(round(vmax),"years"),col=maxcol)
-    text(vmin-10+2018,0.24,paste(round(vmin),"years"),col=mincol)
+    text(vmax-10+Lyear,0.03,paste(round(vmax),"years"),col=maxcol)
+    text(vmin-10+Lyear,0.24,paste(round(vmin),"years"),col=mincol)
     legend('topleft',legend=c(paste("Highest = ",q_max,"%"),paste("Lowest = ",q_min,"%")),text.col=c(maxcol,mincol),bty='n',text.font=1)
 
 
@@ -1097,12 +1098,14 @@ plotDh <- function(dummy=1){
   Dh_nams<-unlist(Dh_list)#c("D_10", "D_10_20","D_20_30","D_30_60","D_60_80","D_80")
   condh<-Dh_nams%in%input$Dh
 
-  suppressWarnings({ny<-as.numeric(input$Lyear-input$Syear+1)})
-  if(length(ny)==0){
-    ny<-68
-  }else if(is.na(ny)){
-    ny<-68
-  }
+  #suppressWarnings({ny<-as.numeric(input$Lyear-input$Syear+1)})
+  #if(length(ny)==0){
+  #  ny<-68
+  #}else if(is.na(ny)){
+  #  ny<-68
+  #}
+  
+  ny<-Nyears
 
   if(sum(cond)>0){
     par(mfrow=c(1,2),mai=c(0.3,0.5,0.01,0.01), omi=c(0.4,0.18,0.55,0.1),cex.main = 1.5, cex.lab=1.35 )

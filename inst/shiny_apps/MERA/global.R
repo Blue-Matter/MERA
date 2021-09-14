@@ -2,9 +2,10 @@
 # Shared variables
 
 Current_Year<<-as.integer(substr(Sys.time(),start=1,stop=4))
-CurrentYr<<-2021 # as.integer(input$Lyear) #as.integer(substr(as.character(Sys.time()),1,4))
+CurrentYr<<-Current_Year # as.integer(input$Lyear) #as.integer(substr(as.character(Sys.time()),1,4))
 Syear<<-1951
-Lyear<<-2018
+Lyear<<-CurrentYr-2
+Nyears<<-Lyear-Syear+1
 
 # App design
 
