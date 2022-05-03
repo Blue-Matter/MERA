@@ -296,7 +296,7 @@ makeOM<-function(PanelState,nyears=NA,maxage=NA,proyears=NA,UseQonly=F){
     
     OM1@cpars$MPA<-matrix(1,nrow=OM1@nyears+OM1@proyears,ncol=3)
     OM1@cpars$MPA[1:(Nyears-1),3]<-0
-    OM1@cpars$MPA[Nyears:proyears,1]<-0
+    OM1@cpars$MPA[Nyears+(0:OM1@proyears),1]<-0
  
     # Initial depletion                                                                      # F19 ----------
     initDrng<-getminmax(1,"Dh",PanelState)
