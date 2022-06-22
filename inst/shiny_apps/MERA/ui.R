@@ -405,7 +405,7 @@ shinyUI(
         
         column(12,tags$hr(style="margin-top: 3px; margin-bottom: 3px"),
                h5(tags$b("Manuals and Documentation",style="color:#347ab6")),
-          column(12,h5("For further information visit the ", a("MERA website",href="https://merafish.org",target="blank"), " or check the ", a("manual.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html", target="_blank"),style = "color:grey"),
+          column(12,h5("For further information visit the ", a("MERA website",href="https://merafish.org",target="blank"), " or check the ", a("manual.", href="https://blue-matter.github.io/openMSE/MERA-User-Guide.html", target="_blank"),style = "color:grey"),
           h5("The DLMtool paper is also available ", a("here.", href="https://besjournals.onlinelibrary.wiley.com/doi/abs/10.1111/2041-210X.13081", target="_blank"), style = "color:grey"),
           h5("For technical questions or bug reports please contact ", a("tom@bluematterscience.com", href="mailto:tom@bluematterscience.com", target="_blank"),style = "color:grey"))
           
@@ -520,7 +520,7 @@ shinyUI(
                                  h5(" - vulnerability to fishing of various size classes",style="color:grey"),
                                  h5(""),
                                  h5("More detailed help on the Fishery questions can be found in the
-                                         MERA User Guide: ", a("Section 2.1.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html#21_fishery_questions", target="_blank"),style="color:grey")),
+                                         MERA User Guide: ", a("Section 3.1.", href="https://blue-matter.github.io/openMSE/MERA-User-Guide.html#31_Fishery_Questions", target="_blank"),style="color:grey")),
 
                             conditionalPanel(width=4,condition="output.Fpanel==1",#|output.Fpanel==undefined",
                                 fluidRow(
@@ -671,7 +671,7 @@ shinyUI(
                                       h5(" - determine the relative success of management procedures that provide various types of advice.",style="color:grey"),
                                       h5(""),
                                       h5("More detailed help on the Management questions can be found in the MERA manual
-                                         : ", a("Section 2.2.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html#22_management_questions", target="_blank"),style="color:grey")),
+                                         : ", a("Section 3.2.", href="https://blue-matter.github.io/openMSE/MERA-User-Guide.html#32_Management_Questions", target="_blank"),style="color:grey")),
 
 
                                  conditionalPanel(width=4,condition="output.Mpanel==1",
@@ -722,7 +722,7 @@ shinyUI(
                                                   h5(" - determine the relative success of the management approaches that rely on differing types of data.",style="color:grey"),
                                                   h5(""),
                                                   h5("More detailed help on the data questions can be found in the MERA manual
-                                         : ", a("Section 2.3.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html#23_data_questions", target="_blank"),style="color:grey")),
+                                         : ", a("Section 3.3.", href="https://blue-matter.github.io/openMSE/MERA-User-Guide.html#33_Data_Questions", target="_blank"),style="color:grey")),
                                  
                                  conditionalPanel(width=4,condition="output.Dpanel==1",
                                                   
@@ -764,7 +764,7 @@ shinyUI(
                         #          h5("Currently these include the specification of bio-economic model parameters.",style="color:grey"),
                         #          h5(""),
                          #         h5("More detailed help on Extra features can be found in the MERA manual
-                          #            : ", a("Section 2.4.", href="https://dlmtool.github.io/DLMtool/MERA/MERA_User_Guide_v6.html#24_extra", target="_blank"),style="color:grey")
+                          #            : ", a("Section 3.4.", href="https://blue-matter.github.io/openMSE/MERA-User-Guide.html#24_extra", target="_blank"),style="color:grey")
                                   
                            #     ),
                          
@@ -1153,7 +1153,7 @@ shinyUI(
                              h5("Users can also choose to exclude reference management procedures (e.g. zero catches, fishing at FMSY), activate parallel computation if more than 48 simulations are specified (which is much faster but there is no MSE progress bar).",style = "color:grey"),
                              h5("The Application step requires the selection of a single MP. Other options include the loading of custom DLMtool/MSEtool code (MPs, performance metrics and MSE controls)",style = "color:grey"),
                              h5(""),
-                             h5("A more detailed guide to these options can be found in the MERA manual ",a("Section 7.", href="www.datalimitedtoolkit.org", target="_blank"),style = "color:grey"),
+                             h5("A more detailed guide to these options can be found in the MERA manual ",a("Section 2.3", href="https://blue-matter.github.io/openMSE/MERA-User-Guide.html#23_The_Settings_dropdown_menu", target="_blank"),style = "color:grey"),
                              h5(""),
                              h5("NOTE: a few features are currently not available such as the ability to specify Low Trophic Level (LTL) species for an alternative
                                 performance evaluation, the ability to upload indicator data and select variables for power analysis.",style = "color:grey")
@@ -1217,9 +1217,11 @@ shinyUI(
 
                  column(width=3,#style="height:180px",
                         conditionalPanel(condition="output.Fpanel>0|output.Ppanel>0|output.Dpanel>0|output.Fpanel!=undefined|output.Mpanel!=undefined|output.Dpanel!=undefined",
-                              textOutput("Dpanelout"),
-                              textOutput("Fpanelout"),
-                              textOutput("Mpanelout")
+                             textOutput("Fpanelout"),
+                             textOutput("Mpanelout"),
+                             textOutput("Dpanelout")
+                              
+                              
                                
                         )
                  )

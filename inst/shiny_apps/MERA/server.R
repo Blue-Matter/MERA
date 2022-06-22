@@ -736,24 +736,23 @@ shinyServer(function(input, output, session) {
   }
 
   # Observe for selecting rows from tables
-  P_Tab_1_track = observe({
-    input$P_Tab_1_rows_selected
+  #P_Tab_1_track = observe({
+  #  input$P_Tab_1_rows_selected
     # print(input$P_Tab_1_rows_selected)
-    isolate({
-      if(input$Skin == "Generic" & input$Mode =="Management Planning") {
-        UpdateGenericSkinPlots()
-      }  
-    })
-  }) 
+   # isolate({
+    #  if(input$Skin == "Generic" & input$Mode =="Management Planning") {
+     #   UpdateGenericSkinPlots()
+    #  }  
+    #})
+  #}) 
   
-  P_Tab_3_track = observe({
-    input$P_Tab_3_rows_selected
-    isolate({
-      if(input$Skin == "Generic" & input$Mode =="Management Planning") {
-        UpdateGenericSkinPlots()
-      }  
-    })
-  }) 
+  #P_Tab_3_track = observe({
+  #  input$P_Tab_3_rows_selected
+   # isolate({
+    #  if(input$Skin == "Generic" & input$Mode =="Management Planning") {
+     #   UpdateGenericSkinPlots()
+    #  }  
+    #})}) 
   
   # Show REFRESH RESULTS if ...
   observeEvent(input$burnin,{ Tweak(1) })
@@ -963,7 +962,7 @@ shinyServer(function(input, output, session) {
        
         incProgress(0.1)
         knitr::knit_meta(class=NULL, clean = TRUE) 
-        
+        # saveRDS(Status,file="C:/temp/Status.rds" ) 
         output<-SAMtool:::plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
         incProgress(0.8)
         file.copy(output, file)
