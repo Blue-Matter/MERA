@@ -33,7 +33,7 @@ Download and install the MERA package:
 
 ```
 # install.packages('devtools')
-devtools::install_github('bluematter/MERA')
+devtools::install_github('blue-matter/MERA')
 ```
 
 Run the MERA App:
