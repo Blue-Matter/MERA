@@ -32,8 +32,8 @@ The MERA App can be installed and run locally within the R environment:
 Download and install the MERA package: 
 
 ```
-# install.packages('devtools')
-devtools::install_github('blue-matter/MERA')
+# install.packages('remotes')
+remotes::install_github('blue-matter/MERA')
 ```
 
 Run the MERA App:
