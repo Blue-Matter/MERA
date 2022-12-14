@@ -1581,7 +1581,6 @@ shinyUI(
        hr(),
        
        column(6,style="height:40px"),
-       column(2,style="height:40px; padding:9px",textOutput("Version")),
        column(2,style="height:40px; padding:9px",textOutput("Dependencies")),
        column(2,style="height:40px; padding:9px",textOutput("SessionID")),
        column(2,style="height:40px", h6("Creative Commons, 2021"))
