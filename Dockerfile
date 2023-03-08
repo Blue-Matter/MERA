@@ -26,14 +26,17 @@ RUN apt-get update && apt-get install -y \
 # install basic shiny functionality to R
 RUN R -e "install.packages(c('shiny', 'rmarkdown', 'remotes'), repos='https://cloud.r-project.org/')"
 
+# install CRAN version of openMSE packages	 
+RUN R -e "install.packages(c('MSEtool', 'DLMtool'), repos='https://cloud.r-project.org/')"
+
 # install Github versions of openMSE packages	 
-RUN R -e "remotes::install_github(c('blue-matter/MSEtool', 'blue-matter/DLMtool', 'blue-matter/SAMtool'), dependencies=TRUE)"
+RUN R -e "remotes::install_github(c('blue-matter/SAMtool'), dependencies=TRUE)"
 
 # install R dependencies for MERA
 RUN R -e "install.packages(c('openMSE', 'corpcor', 'cowplot', 'curl', 'DT', 'formattable', 'kableExtra', 'mvtnorm', 'shinyjs', 'shinyalert', 'shinyBS', 'shinyWidgets', 'tinytex','rfishbase'), dependencies=TRUE, repos='https://cloud.r-project.org/')"
 
 # install R package from shiny_live branch
-RUN R -e "remotes::install_github('blue-matter/MERA', 'shiny_live', dependencies=TRUE, upgrade='never')"
+RUN R -e "remotes::install_github('blue-matter/MERA', 'shiny_live', upgrade='never')"
 	 
 # instruct Docker to expose port 3838 to the outside world
 # (otherwise it will not be possible to connect to the Shiny application)
