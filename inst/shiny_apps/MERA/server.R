@@ -963,7 +963,7 @@ shinyServer(function(input, output, session) {
         incProgress(0.1)
         knitr::knit_meta(class=NULL, clean = TRUE) 
         # saveRDS(Status,file="C:/temp/Status.rds" ) 
-        output<-SAMtool:::plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
+        output<-SAMtool::plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
         incProgress(0.8)
         file.copy(output, file)
       }) # end of progress

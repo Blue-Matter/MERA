@@ -457,7 +457,7 @@ shinyUI(
               h5(textOutput("Version"),style = "color:grey"), 
               h5(textOutput("Dependencies_help"),style = "color:grey"),
               h5(textOutput("SessionID_help"),style = "color:grey"),
-              h5("Open Source, Creative Commons, 2021",style = "color:grey")
+              h5("Open Source, Creative Commons, 2023",style = "color:grey")
           )
         ),
         column(12, tags$hr(style="margin-top: 3px; margin-bottom: 3px"),
@@ -1583,7 +1583,7 @@ shinyUI(
        column(6,style="height:40px"),
        column(2,style="height:40px; padding:9px",textOutput("Dependencies")),
        column(2,style="height:40px; padding:9px",textOutput("SessionID")),
-       column(2,style="height:40px", h6("Creative Commons, 2021"))
+       column(2,style="height:40px", h6("Creative Commons, 2023"))
 
     ) # end of fluid page
   
