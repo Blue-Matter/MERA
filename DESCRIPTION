@@ -1,7 +1,7 @@
 Package: MERA
 Type: Package
 Title: Method Evaluation and Risk Assessment
-Version: 1.0.4
+Version: 1.0.5
 Authors@R: person("Tom", "Carruthers",, "tom@bluematterscience.com", role=c("aut", "cre"))
 Maintainer: Tom Carruthers <tom@bluematterscienc.com>
 Description: A population risk assessment framework that links a Shiny GUI to openMSE
@@ -26,7 +26,7 @@ Imports: corpcor,
          tinytex,
          rfishbase,
          cowplot,
-         readXL,
+         readxl,
          httpuv,
          mvtnorm,
          rmarkdown,
