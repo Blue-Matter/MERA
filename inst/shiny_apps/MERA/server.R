@@ -1,7 +1,7 @@
 library(shiny)
 library(MSEtool)
 library(DLMtool)
-# library(SAMtool)
+library(SAMtool)
 library(kableExtra)
 library(formattable)
 library(knitr)

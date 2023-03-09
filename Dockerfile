@@ -24,20 +24,14 @@ RUN apt-get update && apt-get install -y \
 	#libcurl4-gnutls-dev \
 
 # install basic shiny functionality to R
-RUN R -e "install.packages(c('shiny', 'rmarkdown', 'remotes'), repos='https://cloud.r-project.org/')"
-
-# install CRAN version of openMSE packages	 
-RUN R -e "install.packages(c('MSEtool', 'DLMtool'), repos='https://cloud.r-project.org/')"
+RUN R -e "install.packages(c('shiny', 'rmarkdown', 'remotes', 'openMSE'), repos='https://cloud.r-project.org/')"
 
 # install Github versions of openMSE packages	 
-RUN R -e "remotes::install_github(c('blue-matter/SAMtool'), dependencies=TRUE)"
-
-# install Github versions of openMSE packages	 
-RUN R -e "remotes::install_github(c('blue-matter/MSEextra'))"
+RUN R -e "remotes::install_github(c('blue-matter/MSEtool', 'blue-matter/DLMtool', 'blue-matter/SAMtool', 'blue-matter/MSEextra'))"
 
 # install R package from shiny_live branch
-RUN R -e "remotes::install_github('blue-matter/MERA', 'shiny_live', upgrade='always')"
-	 
+RUN R -e "remotes::install_github('blue-matter/MERA', 'shiny_live')"
+
 # instruct Docker to expose port 3838 to the outside world
 # (otherwise it will not be possible to connect to the Shiny application)
 EXPOSE 3838

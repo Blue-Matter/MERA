@@ -351,6 +351,8 @@ GetDep<-function(OM1,dat,code){
   #saveRDS(OM1,"C:/temp/OM.rda")      #
   #saveRDS(code,"C:/temp/code.rda") # 
   
+  # datS = readRDS("C:/temp/datS.rda");   OM1 = readRDS("C:/temp/OM.rda"); code = readRDS("C:/temp/code.rda"); input = list(ESS=100,Wt_comp = 1,CAL=1,maxF=3,C_eq_val=0);condition = 'effort'; selectivity='dome'; rcmcpus=1 
+  
   out<-SAMtool:::RCM(OM1,datS,
            ESS = rep(input$ESS,2),
            LWT = list(CAA=input$Wt_comp,CAL=input$Wt_comp),
@@ -360,7 +362,8 @@ GetDep<-function(OM1,dat,code){
            condition=condition,
            cores = rcmcpus,
            mean_fit=TRUE,
-           control=list(eval.max=1E4, iter.max=1E4, abs.tol=1e-6))
+           control=list(eval.max=1E4, iter.max=1E4, abs.tol=1e-6),
+           resample=TRUE)
   
   out
   
