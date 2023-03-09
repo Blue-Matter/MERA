@@ -21,7 +21,7 @@ source("./global.R")
 # Define server logic required to generate and plot a random distribution
 shinyServer(function(input, output, session) {
 
-  Version<<-"1.0.1"
+  Version <<-packageVersion('MERA')
   sfStop()
   
   # -------------------------------------------------------------
