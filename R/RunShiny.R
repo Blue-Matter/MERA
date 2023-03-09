@@ -6,7 +6,7 @@
 #' @references Modified from Deal Attali's code: \url{http://deanattali.com/2015/04/21/r-package-shiny-app/}
 #' @importFrom utils install.packages installed.packages
 #' @export
-Shiny <- function(app) {
+Shiny <- function(app, ...) {
   temp <- try(class(app), silent=TRUE)
 
   if (class(temp) == "try-error") app <- deparse(substitute(app))
@@ -19,7 +19,7 @@ Shiny <- function(app) {
       call. = FALSE)
   }
   appDir <- system.file("shiny_apps", app, package = "MERA")
-  shiny::runApp(appDir, display.mode = "normal",launch.browser = TRUE)
+  shiny::runApp(appDir, display.mode = "normal",launch.browser = TRUE, ...)
 }
 
 
@@ -31,7 +31,7 @@ PKGENVIR <- new.env(parent=emptyenv())
 #'
 #' @return Nothing. Opens the MERA app in a web browser
 #' @export
-MERA <- function(skin="Generic") {
+MERA <- function(skin="Generic", ...) {
   if (class(skin) !="character") stop("skin must be character")
   skins <- list.files(file.path(system.file(package = 'MERA'), "shiny_apps/MERA/Source/Skins"))
   skins <- tools::file_path_sans_ext(skins)
@@ -39,5 +39,5 @@ MERA <- function(skin="Generic") {
   
   PKGENVIR$skin <- skin
   appDir <- system.file("shiny_apps/MERA", package = "MERA")
-  shiny::runApp(appDir, display.mode = "normal",launch.browser = TRUE)
+  shiny::runApp(appDir, display.mode = "normal",launch.browser = TRUE ,...)
 }
