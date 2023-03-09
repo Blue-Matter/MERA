@@ -389,7 +389,7 @@ shinyUI(
                  h5("method evaluation and risk assessment" ,style="padding-top:19px;padding-left:28px")
           ),
           column(6,style="padding-top: 16px",
-                 column(4,tags$a(img(src = "bluematter.png", height = 38, width = 80),href="https://www.bluematterscience.com",target='_blank')),
+                 column(4,tags$a(img(src = "bluematter.PNG", height = 38, width = 80),href="https://www.bluematterscience.com",target='_blank')),
                  column(4,tags$a(img(src = "openMSE.png", height = 32, width = 105),href="https://www.openmse.com",target='_blank')),
                  column(4,tags$a(img(src = "MSC_logo.png", height = 34, width = 100),href="https://www.msc.org",target='_blank'),style="padding-right:15px")
           )
