@@ -19,7 +19,7 @@ Shiny <- function(app, ...) {
       call. = FALSE)
   }
   appDir <- system.file("shiny_apps", app, package = "MERA")
-  shiny::runApp(appDir, display.mode = "normal",launch.browser = TRUE, ..)
+  shiny::runApp(appDir, display.mode = "normal",launch.browser = TRUE, ...)
 }
 
 
