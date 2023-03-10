@@ -169,7 +169,7 @@ shinyUI(
          ),
          
          column(12,tags$hr(style="margin-top: 3px; margin-bottom: 3px"), 
-                h5(tags$b("Load DLMtool/MSEtool source code",style="color:#347ab6")),
+                h5(tags$b("Load openMSE source code",style="color:#347ab6")),
                 column(12,tipify(fileInput("Load_anything",label=NULL),title="Load custom management procedures, performance metrics and other DLMtool and MSEtool code"))
          ),
          
@@ -389,7 +389,7 @@ shinyUI(
                  h5("method evaluation and risk assessment" ,style="padding-top:19px;padding-left:28px")
           ),
           column(6,style="padding-top: 16px",
-                 column(4,tags$a(img(src = "bluematter.png", height = 38, width = 80),href="https://www.bluematterscience.com",target='_blank')),
+                 column(4,tags$a(img(src = "bluematter.PNG", height = 38, width = 80),href="https://www.bluematterscience.com",target='_blank')),
                  column(4,tags$a(img(src = "openMSE.png", height = 32, width = 105),href="https://www.openmse.com",target='_blank')),
                  column(4,tags$a(img(src = "MSC_logo.png", height = 34, width = 100),href="https://www.msc.org",target='_blank'),style="padding-right:15px")
           )
@@ -457,7 +457,7 @@ shinyUI(
               h5(textOutput("Version"),style = "color:grey"), 
               h5(textOutput("Dependencies_help"),style = "color:grey"),
               h5(textOutput("SessionID_help"),style = "color:grey"),
-              h5("Open Source, Creative Commons, 2021",style = "color:grey")
+              h5("Open Source, Creative Commons, 2023",style = "color:grey")
           )
         ),
         column(12, tags$hr(style="margin-top: 3px; margin-bottom: 3px"),
@@ -465,7 +465,7 @@ shinyUI(
          column(12,
                 h5("MERA was initially commissioned by ", a("the Marine Stewardship Council.",href="https://msc.org",target="blank"),style = "color:grey"),
                 h5("MERA benefits from the ongoing support of the David & Lucile Packard Foundation, the Marine Stewardship Council, the Natural Resources Defense Council and the United Nations Food and Agricultural Organization",style = "color:grey"),
-                h5("The development of the DLMtool and MSEtool R libraries has been funded by the Gordon and Betty Moore Foundation, the Packard Foundation, 
+                h5("The development of the openMSE (DLMtool, MSEtool, and SAMtool) R libraries has been funded by the Gordon and Betty Moore Foundation, the Packard Foundation, 
             Fisheries and Oceans Canada, the Walton Foundation, Resources Legacy Fund, the Natural Resources Defense Council, the United Nations Food and Agricultural Organization, and the California Department of Fish and Wildlife ",style = "color:grey"),
                 h5("MERA has benefitted from the input of many people. Particular thanks to Tony Smith, Keith Sainsbury, Kevin Stokes, Ana Parma, Sandy Morrison, Katie Longo and Ernesto Jardim for their help in designing and refining the App.",style = "color:grey")
          )
@@ -1058,7 +1058,7 @@ shinyUI(
                       
                       conditionalPanel(condition="input.tabs1==3&output.Dpanel==1",
                           h5("Users have the option of loading fishery data to unlock various MERA features",style = "color:grey"),
-                          h5("When formatted into a DLMtool/MSEtool csv data file, fishery data can be used to:",style = "color:grey"),
+                          h5("When formatted into an openMSE csv data file, fishery data can be used to:",style = "color:grey"),
                           h5(" - condition operating models",style = "color:grey"),
                           h5(" - determine feasible MPs (Management Planning mode)", style = "color:grey"),
                           h5(" - assess the fishery status (Status Determination mode)", style = "color:grey"),
@@ -1583,7 +1583,7 @@ shinyUI(
        column(6,style="height:40px"),
        column(2,style="height:40px; padding:9px",textOutput("Dependencies")),
        column(2,style="height:40px; padding:9px",textOutput("SessionID")),
-       column(2,style="height:40px", h6("Creative Commons, 2021"))
+       column(2,style="height:40px", h6("Creative Commons, 2023"))
 
     ) # end of fluid page
   

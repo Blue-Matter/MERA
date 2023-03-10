@@ -1,7 +1,7 @@
 library(shiny)
 library(MSEtool)
 library(DLMtool)
-# library(SAMtool)
+library(SAMtool)
 library(kableExtra)
 library(formattable)
 library(knitr)
@@ -21,7 +21,7 @@ source("./global.R")
 # Define server logic required to generate and plot a random distribution
 shinyServer(function(input, output, session) {
 
-  Version<<-"1.0.1"
+  Version <<-packageVersion('MERA')
   sfStop()
   
   # -------------------------------------------------------------
@@ -154,9 +154,9 @@ shinyServer(function(input, output, session) {
   output$Dpanelout <- renderText({ paste("Data",Dpanel(),"/ 4")})
  
   # Update UI
-  output$Version<-renderText(paste0("MSC-DLMtool App v", Version)) 
+  output$Version<-renderText(paste0("MERA v", Version)) 
   output$Dependencies<-renderText(paste0("Powered by: DLMtool v", packageVersion('DLMtool'), "  /  MSEtool v",packageVersion('MSEtool'), "  /  SAMtool v",packageVersion('SAMtool'), "  /  R v",getRversion())) #"method evaluation and risk assessment    (MSC-DLMtool App v4.1.7)"
-  output$Version_help<-renderText(paste0("MSC-DLMtool App v", Version)) 
+  output$Version_help<-renderText(paste0("MERA v", Version)) 
   output$Dependencies_help<-renderText(paste0("Powered by: DLMtool v", packageVersion('DLMtool'), "  /  MSEtool v",packageVersion('MSEtool'), "  /  SAMtool v",packageVersion('SAMtool'), "  /  R v",getRversion())) #"method evaluation and risk assessment    (MSC-DLMtool App v4.1.7)"
   
   # Skin changing tips: you need to:
@@ -963,7 +963,7 @@ shinyServer(function(input, output, session) {
         incProgress(0.1)
         knitr::knit_meta(class=NULL, clean = TRUE) 
         # saveRDS(Status,file="C:/temp/Status.rds" ) 
-        output<-SAMtool:::plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
+        output<-SAMtool::plot(Status$Fit[[1]],sims=Status$Fit[[1]]@conv,open_file = FALSE)
         incProgress(0.8)
         file.copy(output, file)
       }) # end of progress
