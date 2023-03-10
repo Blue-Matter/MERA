@@ -78,15 +78,23 @@ Update_Questionnaire<-function(MSClog){
     if(!("Lyear" %in% names(MSClog[[3]])))MSClog[[3]]$Lyear<-MSClog[[3]]$nyears
     
     if("Nyears" %in% names(MSClog[[3]])){
-      updateNumericInput(session, "Lyear",   value= Lyear)
-      updateNumericInput(session, "Syear",   value= Lyear-MSClog[[3]]$Nyears+1)
       Lyear<<-Current_Year-2
       Syear<<-Current_Year-MSClog[[3]]$Nyears+1
+      updateNumericInput(session, "Lyear",   value= Lyear)
+      updateNumericInput(session, "Syear",   value= Lyear-MSClog[[3]]$Nyears+1)
+      
+    }else if("nyears" %in% names(MSClog[[3]])){
+      Lyear<<-Current_Year-2
+      Syear<<-Current_Year-MSClog[[3]]$nyears+1  
+      updateNumericInput(session, "Lyear",   value= Lyear)
+        updateNumericInput(session, "Syear",   value= Lyear-MSClog[[3]]$nyears+1)
+        
     }else{
-      updateNumericInput(session, "Lyear",   value= MSClog[[3]]$Lyear)
-      updateNumericInput(session, "Syear",   value= MSClog[[3]]$Syear)
       Lyear<<-MSClog[[3]]$Lyear
       Syear<<-MSClog[[3]]$Syear
+      updateNumericInput(session, "Lyear",   value= MSClog[[3]]$Lyear)
+      updateNumericInput(session, "Syear",   value= MSClog[[3]]$Syear)
+      
     }
     
     updateTextInput(session, "Author",   value= MSClog[[3]]$Author)

@@ -289,15 +289,16 @@ makeOM<-function(PanelState,nyears=NA,maxage=NA,proyears=NA,UseQonly=F){
     # plot(Ahsim,Vhsim,type='l',xlim=c(0,0.9)); lines(Asim,Vsim,col="grey"); lines(Sz2,V2,col="red")
    
     mov<-array(NA,c(nsim, maxage+1, nareas, nareas, Nyears+proyears))
-    for(i in 1:nsim)mov[i,,,,]<-array(rep(makemov(fracs=Asize[i,], prob=probs[i,]),each=maxage+1),c(maxage+1,nareas,nareas,Nyears+proyears))
+    for(i in 1:nsim)mov[i,,,,]<-array(rep(makemov(fracs=Asize[i,], prob=probs[i,]),each=maxage+1)
+                                      ,c(maxage+1,nareas,nareas,Nyears+proyears))
     
-    # OM1@MPA<-matrix(c(1,1,1,0,                                            # year1, area1 open, area2 open, area3 shut
-    #                 nyears-1,0,1,1),ncol=nareas+1,byrow=T)              # nyears-1, area1 shut, area2 open, area3 open 
-    
+    OM1@cpars$mov<-mov  
     OM1@cpars$MPA<-matrix(1,nrow=OM1@nyears+OM1@proyears,ncol=3)
-    OM1@cpars$MPA[1:(Nyears-1),3]<-0
-    OM1@cpars$MPA[Nyears:proyears,1]<-0
- 
+    OM1@cpars$MPA[,3]<-0
+    OM1@cpars$Asize <- Asize
+    
+    
+    
     # Initial depletion                                                                      # F19 ----------
     initDrng<-getminmax(1,"Dh",PanelState)
     #print(initDrng)
