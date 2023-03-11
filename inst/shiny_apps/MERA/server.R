@@ -346,7 +346,7 @@ shinyServer(function(input, output, session) {
     dattest=NULL
    
     if(grepl(".csv",filey$datapath)|grepl(".xlsx",filey$datapath)){ # if it is a .csv file
-
+       # filey=list(datapath = "C:/temp/Data_TC_wECP.xlsx")
       tryCatch(
         {
          #dattest<-XL2Data(filey$datapath)

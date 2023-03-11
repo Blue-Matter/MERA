@@ -171,7 +171,7 @@ ppdplot<-function(pred,obs,yrlab,p=c(0.025,0.05,0.25,0.75,0.95,0.975),pcols=c("g
   qmat<-apply(pred,2,quantile,p,na.rm=T)
   nobs<-length(obs)
   ylim1<-quantile(pred,p=c(0.01,0.99),na.rm=T)
-  ylim2<-range(obs)
+  ylim2<-range(obs,na.rm=T)
   ylim<-c(min(ylim1[1],ylim2[1]),max(ylim1[2],ylim2[2]))
   plot(range(yrlab),ylim,col="white")
   yind<-c(1:nobs,nobs:1)
@@ -193,6 +193,14 @@ ppdplot<-function(pred,obs,yrlab,p=c(0.025,0.05,0.25,0.75,0.95,0.975),pcols=c("g
   
 }
 
+debugAI<-function(){
+ 
+  merasess = readRDS("C:/temp/Leopard_coralgr (2).merasession")
+  MSEobj_Eval = merasess$MSEobj_Eval
+  dat = merasess$MSClog$dat
+  dat_ind = merasess$MSClog$dat_ind
+   
+}  
 
 post_marg_plot<-function(MSEobj_Eval,dat,dat_ind,options=list()){
   
@@ -236,7 +244,7 @@ post_marg_plot<-function(MSEobj_Eval,dat,dat_ind,options=list()){
     indy<-indy+1
     predInd[[indy]]<-PPD@SpInd[,styr+(1:YIU),drop=F]#(PPD@Ind/PPD@Ind[,styr])[,styr+(1:YIU),drop=F]
     obsInd[[indy]]<-dat_ind@SpInd[1,styr+(1:YIU)] #(dat_ind@Ind/dat_ind@Ind[,styr])[styr+(1:YIU)]
-    IndNam[[indy]]<-"Index of population biomass"
+    IndNam[[indy]]<-"Index of spawning biomass"
     
   }
   
@@ -253,15 +261,16 @@ post_marg_plot<-function(MSEobj_Eval,dat,dat_ind,options=list()){
   
   
   par(mfrow=c(ceiling((2+indy)/2),2),mai=c(0.4,0.4,0.35,0.05),omi=c(0.35,0.3,0.05,0.05))
-  ppdplot(pred=predCat,obs=obsCat,yrlab,lab="Catch")
+  if(sum(!is.na(obsCat))>0) ppdplot(pred=predCat,obs=obsCat,yrlab,lab="Catch")
   
   legend('topleft',legend=c("95% PI","90% PI","50% PI"),fill=c("grey90","grey78","grey66"),title="Pred. Data",bg="#ffffff20",box.col="#ffffff20")
   legend('topright',legend=c("Consistent","Borderline","Inconsistent"),pch=19,col=c("black","orange","red"),title="Obs. Data",text.col=c("black","orange","red"),bg="#ffffff20",box.col="#ffffff20")
   
-  ppdplot(pred=predML,obs=obsML,yrlab,lab="Mean Length in Catch")
+  if(sum(!is.na(obsML))>0)ppdplot(pred=predML,obs=obsML,yrlab,lab="Mean Length in Catch")
   
-  for(i in 1:indy) ppdplot(pred=predInd[[i]],obs=obsInd[[i]],yrlab,lab=IndNam[[i]])
-  
+  for(i in 1:indy){
+    if(sum(!is.na(obsInd[[i]]))>0) ppdplot(pred=predInd[[i]],obs=obsInd[[i]],yrlab,lab=IndNam[[i]])
+  }  
   mtext("Year",1,line=1.2,outer=T)
 
  
