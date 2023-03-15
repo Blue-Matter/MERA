@@ -29,7 +29,7 @@ namconv<-function(nam){
 }
 
 getAllMPs<-function(){
-  MPs<-avail('MP','DLMtool') # only DLMtool MPs
+  MPs<-avail('MP',c('MSEtool', 'DLMtool')) # only DLMtool MPs
   cond<-grepl("MLL",MPs)|grepl('ML',MPs)
   MPs<-MPs[!cond]
   MPs<-MPs[!MPs%in%c("YPR","YPR_CC","YPR_ML","LBSPR")]
